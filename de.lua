@@ -61,7 +61,7 @@ elseif EBGuiKey ~= "script_Elemental082022_220503" and not isBlocked and not isM
     warn("=============================================================")
 else
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/EarthToAccess/EBGui/main/bin/info.lua'))()
-	local verNum = "v2.7.1"
+	local verNum = "v2.7.2"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
