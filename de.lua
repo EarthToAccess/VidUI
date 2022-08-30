@@ -1756,7 +1756,7 @@ else
 		end
 	end)
 
-	-- ESP
+	-- Standard ESP
 
 	local ESP = Instance.new("TextButton")
 	ESP.Name = "ESP"
@@ -1976,7 +1976,7 @@ else
 	GNameTag.StudsOffset = Vector3.new(0, 3.6, 0)
 
 	local GTag = Instance.new("TextLabel", GNameTag)
-	GTag.Name = "Tag"
+	GTag.Name = "GTag"
 	GTag.BackgroundTransparency = 1
 	GTag.Position = UDim2.new(0, -50, 0, 0)
 	GTag.Size = UDim2.new(0, 300, 0, 20)
@@ -1991,33 +1991,30 @@ else
 
 	function GLoadCharacter(v)
 		
-		local srvRS = game:GetService("ReplicatedStorage")
-		local insRSR = srvRS:WaitForChild("Remotes")
 		local tblPlayerData = {}
-		insRSR:WaitForChild("PlayerData").OnClientEvent:Connect(function(v, tblData)
+		RSR:WaitForChild("PlayerData").OnClientEvent:Connect(function(v, tblData)
 			tblPlayerData[v] = tblData
 		end)
-
 		
 		if v ~= player then
 			repeat wait() until v.Character ~= nil
 			v.Character:WaitForChild("Humanoid")
-			local vHolder = Holder:FindFirstChild(v.Name)
+			local vHolder = GHolder:FindFirstChild(v.Name)
 			vHolder:ClearAllChildren()
 
-			local b = Box:Clone()
-			b.Name = v.Name .. "Box"
+			local b = GBox:Clone()
+			b.Name = v.Name .. "GBox"
 			b.Adornee = v.Character.HumanoidRootPart
 			b.Parent = vHolder
 
-			local t = NameTag:Clone()
-			t.Name = v.Name .. "NameTag"
+			local t = GNameTag:Clone()
+			t.Name = v.Name .. "GNameTag"
 			t.Parent = vHolder
 			t.Adornee = v.Character:WaitForChild("HumanoidRootPart", 5)
 			if not t.Adornee then
-				return UnloadCharacter(v)
+				return GUnloadCharacter(v)
 			end
-			t.Tag.Text = v.Name
+			t.GTag.Text = v.Name
 			t.Enabled = true
 			wait()
 
@@ -2036,23 +2033,23 @@ else
 						local s = tblPlayerData[v] and math.ceil(tblPlayerData[v].Stamina * 10) or 1000
 						local strs =  "S: " .. (not(maxs == 0) and tostring(math.ceil(100 * s / maxs)) or 0) .. "% [" .. tostring(s) .. "|" .. tostring(maxs) .. "]"
 
-						t.Tag.Text = v.Name .. ("\n" .. strh) .. ("\n" .. strm) .. ("\n" .. strs)
+						t.GTag.Text = v.Name .. ("\n" .. strh) .. ("\n" .. strm) .. ("\n" .. strs)
 						
 						if GESPEnabled then
-							t.Tag.TextTransparency = 0
-							b.Transparency = 1
+							t.GTag.TextTransparency = 0
+							b.Transparency = 0.7
 						else
-							t.Tag.TextTransparency = 1
+							t.GTag.TextTransparency = 1
 							b.Transparency = 1
 						end
 						if h / maxh == 1 then
-							t.Tag.TextColor3 = Color3.fromRGB(255, 255, 255)
+							t.GTag.TextColor3 = Color3.fromRGB(255, 255, 255)
 							b.Color3 = Color3.fromRGB(255, 255, 255)
 						elseif h / maxh == 0 then
-							t.Tag.TextColor3 = Color3.fromRGB(0, 0, 0)
+							t.GTag.TextColor3 = Color3.fromRGB(0, 0, 0)
 							b.Color3 = Color3.fromRGB(0, 0, 0)
 						else
-							t.Tag.TextColor3 = Color3.fromRGB(192, (192 * (h / maxh)), (192 * (h / maxh)))
+							t.GTag.TextColor3 = Color3.fromRGB(192, (192 * (h / maxh)), (192 * (h / maxh)))
 							b.Color3 = Color3.fromRGB(192, (192 * (h / maxh)), (192 * (h / maxh)))
 						end
 					end) then
@@ -2065,15 +2062,15 @@ else
 	end
 
 	function GUnloadCharacter(v)
-		local vHolder = Holder:FindFirstChild(v.Name)
-		if vHolder and (vHolder:FindFirstChild(v.Name .. "Box") ~= nil or vHolder:FindFirstChild(v.Name .. "NameTag") ~= nil) then
+		local vHolder = GHolder:FindFirstChild(v.Name)
+		if vHolder and (vHolder:FindFirstChild(v.Name .. "GBox") ~= nil or vHolder:FindFirstChild(v.Name .. "GNameTag") ~= nil) then
 			vHolder:ClearAllChildren()
 		end
 	end
 
 	function GLoadPlayer(v)
 		if v ~= player then
-			local vHolder = Instance.new("Folder", Holder)
+			local vHolder = Instance.new("Folder", GHolder)
 			vHolder.Name = v.Name
 			v.CharacterAdded:Connect(function()
 				if GESPEnabled == true then
@@ -2089,7 +2086,7 @@ else
 
 	function GUnloadPlayer(v)
 		GUnloadCharacter(v)
-		local vHolder = Holder:FindFirstChild(v.Name)
+		local vHolder = GHolder:FindFirstChild(v.Name)
 		if vHolder then
 			vHolder:Destroy()
 		end
@@ -2109,14 +2106,14 @@ else
 
 	game.ItemChanged:Connect(function(i)
 		if i:IsA("Player") then
-			if Holder:FindFirstChild(i.Name) then
+			if GHolder:FindFirstChild(i.Name) then
 				GUnloadCharacter(i)
 				wait()
 				GLoadCharacter(i)
 			end
 		elseif i:IsA("Humanoid") and i.Parent then
 			local p = players:GetPlayerFromCharacter(i.Parent)
-			if p ~= player and p ~= nil and Holder:FindFirstChild(p.Name) then
+			if p ~= player and p ~= nil and GHolder:FindFirstChild(p.Name) then
 				pcall(function()
 					GUpdateFuncs[p]()
 				end)
