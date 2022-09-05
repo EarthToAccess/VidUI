@@ -14,7 +14,7 @@ local masterlist = {
 }
 
 local goldlist = {
-	"gold_ElementalFirst_397678"
+	"gold_092022_MaturePlatform_971310"
 }
 
 local players = game:GetService("Players")
@@ -52,7 +52,7 @@ elseif not EBGuiKey and not isBlocked and not isMaster then
     warn("|       You'll need to find the appropriate key first.      |")
     warn("|                                                           |")
     warn("=============================================================")
-elseif EBGuiKey ~= "script_Elemental082022_220503" and not isBlocked and not isMaster then
+elseif EBGuiKey ~= "092022_MeaslyScience_483688" and not isBlocked and not isMaster then
     warn("=======================[[ ATTENTION ]]=======================")
     warn("|                                                           |")
     warn("|               Your unlock key is incorrect.               |")
@@ -61,7 +61,7 @@ elseif EBGuiKey ~= "script_Elemental082022_220503" and not isBlocked and not isM
     warn("=============================================================")
 else
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/EarthToAccess/EBGui/main/bin/info.lua'))()
-	local verNum = "v2.7.2"
+	local verNum = "v2.7.2b"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
@@ -89,9 +89,9 @@ else
             |  __|| ___ \ | __| | | | |
             | |___| |_/ / |_\ \ |_| | |
             \____/\____/ \____/\__,_|_| ]] .. verNum)
-	print(" ")
+	print("------------------------")
 	print(dumbQuotes[math.random(1,18)])
-	print(" ")
+	print("------------------------")
 	warn("Welcome to EBGui, " .. player.Name .. "!")
 	warn("You're on the Stable branch of EBGui")
 	warn("Questions or concerns? Let us know in the Discord,")
@@ -99,9 +99,9 @@ else
 	wait(0.5)
 	
 	if isMaster then
-		warn([[   
-			Loaded in using the Master List! Overriding access given.
-			  ]])
+		warn("---------------------------------------------------------")   
+		warn("Loaded in using the Master List! Overriding access given.")
+		warn("---------------------------------------------------------")
 	end
 
 	for i,v in pairs(goldlist) do
