@@ -3229,10 +3229,12 @@ else
 					commandBoxOutput.Text = "Check the console for more info!"
 				end
 			elseif string.sub(text, 1, 8) == (prefix .. "update") then
-				if verNum == version then
+				if verNum == current then
 					commandBoxOutput.Text = "No update required!"
-				else
+				elseif verNum == last then
 					commandBoxOutput.Text = "Version outdated! Recent: " .. version
+				else
+					commandBoxOutput.Text = "bro ur on a dev build or sm"
 				end
             end
 
