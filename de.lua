@@ -1619,6 +1619,7 @@ else
 
 	local function SprintRemote()
 		while wait(.5) do
+			repeat wait() until player.Character ~= nil
 			local args = {
 				[1] = "Running",
 				[2] = false,
@@ -1771,7 +1772,7 @@ else
 	local UpdateFuncs = {}
 
 	local Box = Instance.new("BoxHandleAdornment")
-	Box.Name = "nilBox"
+	Box.Name = "nilBoxG"
 	Box.Size = Vector3.new(4, 7, 4)
 	Box.Color3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	Box.Transparency = 0.7
@@ -1780,7 +1781,7 @@ else
 	Box.Visible = true
 
 	local NameTag = Instance.new("BillboardGui")
-	NameTag.Name = "nilNameTag"
+	NameTag.Name = "nilNameTagG"
 	NameTag.Enabled = true
 	NameTag.Size = UDim2.new(0, 200, 0, 50)
 	NameTag.AlwaysOnTop = true
@@ -1795,7 +1796,7 @@ else
 	Tag.TextColor3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	Tag.TextStrokeColor3 = Color3.new(0 / 255, 0 / 255, 0 / 255)
 	Tag.TextStrokeTransparency = 0.4
-	Tag.Text = "nil"
+	Tag.Text = "Not Available"
 	Tag.Font = Enum.Font.Sarpanch
 	Tag.TextScaled = false
 	Tag.TextTransparency = 0
@@ -1960,7 +1961,7 @@ else
 	local GUpdateFuncs = {}
 
 	local GBox = Instance.new("BoxHandleAdornment")
-	GBox.Name = "nilBox"
+	GBox.Name = "nilBoxG"
 	GBox.Size = Vector3.new(4, 7, 4)
 	GBox.Color3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	GBox.Transparency = 0.7
@@ -1969,7 +1970,7 @@ else
 	GBox.Visible = true
 
 	local GNameTag = Instance.new("BillboardGui")
-	GNameTag.Name = "nilNameTag"
+	GNameTag.Name = "nilNameTagG"
 	GNameTag.Enabled = true
 	GNameTag.Size = UDim2.new(0, 200, 0, 50)
 	GNameTag.AlwaysOnTop = true
@@ -1984,7 +1985,7 @@ else
 	GTag.TextColor3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	GTag.TextStrokeColor3 = Color3.new(0 / 255, 0 / 255, 0 / 255)
 	GTag.TextStrokeTransparency = 0.4
-	GTag.Text = "nil"
+	GTag.Text = "Not Available"
 	GTag.Font = Enum.Font.Sarpanch
 	GTag.TextScaled = false
 	GTag.TextTransparency = 0
