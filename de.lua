@@ -61,7 +61,7 @@ elseif EBGuiKey ~= "092022_MeaslyScience_483688" and not isBlocked and not isMas
     warn("=============================================================")
 else
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/EarthToAccess/EBGui/main/bin/info.lua'))()
-	local verNum = "v2.8"
+	local verNum = "v2.8.1"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
