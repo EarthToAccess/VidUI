@@ -1761,10 +1761,14 @@ else
 
 	local ESP = Instance.new("TextButton")
 	ESP.Name = "ESP"
-	ESP.Text = "ESP (Off) [B]"
+	if isGold or isMaster then
+		ESPEnabled = false
+		ESP.Text = "ESP (Off) [B]"
+	else 
+		ESPEnabled = true
+		ESP.Text = "ESP (On) [B]"
+	end
 	table.insert(buttons, ESP)
-
-	ESPEnabled = false
 
 	local Holder = Instance.new("Folder", game.CoreGui)
 	Holder.Name = "ESP"
