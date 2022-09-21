@@ -14,7 +14,7 @@ local masterlist = {
 }
 
 local goldlist = {
-	"gold_092022_MaturePlatform_971310"
+	"gold_092022_RightCork_898423"
 }
 
 local players = game:GetService("Players")
@@ -52,7 +52,7 @@ elseif not EBGuiKey and not isBlocked and not isMaster then
     warn("|       You'll need to find the appropriate key first.      |")
     warn("|                                                           |")
     warn("=============================================================")
-elseif EBGuiKey ~= "092022_MeaslyScience_483688" and not isBlocked and not isMaster then
+elseif EBGuiKey ~= "092022_WastefulCannon_982199" and not isBlocked and not isMaster then
     warn("=======================[[ ATTENTION ]]=======================")
     warn("|                                                           |")
     warn("|               Your unlock key is incorrect.               |")
