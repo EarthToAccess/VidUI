@@ -200,7 +200,8 @@ else
 	local buttonsmain = Instance.new("Frame")
 	buttonsmain.Name = "buttonsmain"
 	buttonsmain.Position = UDim2.new(1.25, 0, 0.65, 0)
-	buttonsmain.Size = UDim2.new(0.4, 0, 0.300, 0)
+	buttonsmain.Size = UDim2.new(0.4, 0, 0.6, 0)
+	--set to a stupid value to check updating, will likely stay 0.3
 	table.insert(borders, buttonsmain)
 
 	buttonsdebounce = false
