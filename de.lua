@@ -3236,7 +3236,7 @@ else
 				if verNum == current then
 					commandBoxOutput.Text = "No update required!"
 				elseif verNum == last then
-					commandBoxOutput.Text = "Version outdated! Recent: " .. version
+					commandBoxOutput.Text = "Version outdated! Current: " .. current
 				else
 					commandBoxOutput.Text = "bro ur on a dev build or sm"
 				end
