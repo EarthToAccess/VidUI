@@ -3391,7 +3391,7 @@ else
 				[2] = "Continuous Strikes",
 				[3] = {
 					["CF"] = targetChr.HumanoidRootPart.CFrame,
-					["Charge"] = 2
+					["Charge"] = "2"
 				}
 			}
 			RSR.DoMagic:InvokeServer(unpack(args))
