@@ -14,10 +14,11 @@ local masterlist = {
 }
 
 local goldlist = {
-	"gold_ElementalFirst_397678"
+	"gold_092022_RightCork_898423"
 }
 
-local player = game.Players.LocalPlayer
+local players = game:GetService("Players")
+local player = players.LocalPlayer
 local ID = player.UserId
 local isBlocked = false
 local isMaster = false
@@ -51,7 +52,7 @@ elseif not EBGuiKey and not isBlocked and not isMaster then
     warn("|       You'll need to find the appropriate key first.      |")
     warn("|                                                           |")
     warn("=============================================================")
-elseif EBGuiKey ~= "script_Elemental082022_220503" and not isBlocked and not isMaster then
+elseif EBGuiKey ~= "092022_WastefulCannon_982199" and not isBlocked and not isMaster then
     warn("=======================[[ ATTENTION ]]=======================")
     warn("|                                                           |")
     warn("|               Your unlock key is incorrect.               |")
@@ -60,7 +61,7 @@ elseif EBGuiKey ~= "script_Elemental082022_220503" and not isBlocked and not isM
     warn("=============================================================")
 else
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/EarthToAccess/EBGui/main/bin/info.lua'))()
-	local verNum = "v2.6"
+	local verNum = "v2.8.2"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
@@ -88,9 +89,9 @@ else
             |  __|| ___ \ | __| | | | |
             | |___| |_/ / |_\ \ |_| | |
             \____/\____/ \____/\__,_|_| ]] .. verNum)
-	print(" ")
+	print("------------------------")
 	print(dumbQuotes[math.random(1,18)])
-	print(" ")
+	print("------------------------")
 	warn("Welcome to EBGui, " .. player.Name .. "!")
 	warn("You're on the Stable branch of EBGui")
 	warn("Questions or concerns? Let us know in the Discord,")
@@ -98,9 +99,9 @@ else
 	wait(0.5)
 	
 	if isMaster then
-		warn([[   
-			Loaded in using the Master List! Overriding access given.
-			  ]])
+		warn("---------------------------------------------------------")   
+		warn("Loaded in using the Master List! Overriding access given.")
+		warn("---------------------------------------------------------")
 	end
 
 	for i,v in pairs(goldlist) do
@@ -1607,6 +1608,39 @@ else
 
 	Freeze.MouseButton1Down:connect(FreezeFunc)
 
+	-- Infinite Sprint
+
+	local InfSprint = Instance.new("TextButton")
+	InfSprint.Name = "InfSprint"
+	InfSprint.Text = "(G) Infinite Sprint (Off)"
+	table.insert(buttons, InfSprint)
+
+	local InfSprintEnabled = false
+
+	local function SprintRemote()
+		while wait(.5) do
+			repeat wait() until player.Character ~= nil
+			local args = {
+				[1] = "Running",
+				[2] = false,
+			}
+			game:GetService("ReplicatedStorage").Remotes.PlayerData:FireServer(unpack(args))
+		end
+	end
+
+	InfSprint.MouseButton1Down:connect(function()
+		if isGold or isMaster then
+			if not InfSprintEnabled then
+				InfSprintEnabled = true
+				InfSprint.Text = "(G) Infinite Sprint (On)"
+				SprintRemote()
+			else
+				InfSprintEnabled = false
+				InfSprint.Text = "(G) Infinite Sprint (Off)"
+			end				
+		end
+	end)
+
 	-- Long Flash
 
 	local LFlash = Instance.new("TextButton")
@@ -1628,7 +1662,7 @@ else
 			[2] = "Lightning Flash",
 			[3] = {
 				["End"] = mousepos,
-				["Origin"] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.p
+				["Origin"] = players.LocalPlayer.Character.HumanoidRootPart.CFrame.p
 			}
 		}
 		RSR.DoMagic:InvokeServer(unpack(args))
@@ -1723,14 +1757,18 @@ else
 		end
 	end)
 
-	-- ESP
+	-- Standard ESP
 
 	local ESP = Instance.new("TextButton")
 	ESP.Name = "ESP"
-	ESP.Text = "ESP (Off) [B]"
+	if isGold or isMaster then
+		ESPEnabled = false
+		ESP.Text = "ESP (Off) [B]"
+	else 
+		ESPEnabled = true
+		ESP.Text = "ESP (On) [B]"
+	end
 	table.insert(buttons, ESP)
-
-	ESPEnabled = false
 
 	local Holder = Instance.new("Folder", game.CoreGui)
 	Holder.Name = "ESP"
@@ -1738,7 +1776,7 @@ else
 	local UpdateFuncs = {}
 
 	local Box = Instance.new("BoxHandleAdornment")
-	Box.Name = "nilBox"
+	Box.Name = "nilBoxG"
 	Box.Size = Vector3.new(4, 7, 4)
 	Box.Color3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	Box.Transparency = 0.7
@@ -1747,7 +1785,7 @@ else
 	Box.Visible = true
 
 	local NameTag = Instance.new("BillboardGui")
-	NameTag.Name = "nilNameTag"
+	NameTag.Name = "nilNameTagG"
 	NameTag.Enabled = true
 	NameTag.Size = UDim2.new(0, 200, 0, 50)
 	NameTag.AlwaysOnTop = true
@@ -1762,7 +1800,7 @@ else
 	Tag.TextColor3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	Tag.TextStrokeColor3 = Color3.new(0 / 255, 0 / 255, 0 / 255)
 	Tag.TextStrokeTransparency = 0.4
-	Tag.Text = "nil"
+	Tag.Text = "Not Available"
 	Tag.Font = Enum.Font.Sarpanch
 	Tag.TextScaled = false
 	Tag.TextTransparency = 0
@@ -1853,15 +1891,15 @@ else
 		end
 	end
 
-	for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+	for i, v in pairs(players:GetPlayers()) do
 		spawn(function() pcall(LoadPlayer, v) end)
 	end
 
-	game:GetService("Players").PlayerAdded:Connect(function(v)
+	players.PlayerAdded:Connect(function(v)
 		pcall(LoadPlayer, v)
 	end)
 
-	game:GetService("Players").PlayerRemoving:Connect(function(v)
+	players.PlayerRemoving:Connect(function(v)
 		pcall(UnloadPlayer, v)
 	end)
 
@@ -1873,7 +1911,7 @@ else
 				LoadCharacter(i)
 			end
 		elseif i:IsA("Humanoid") and i.Parent then
-			local p = game:GetService("Players"):GetPlayerFromCharacter(i.Parent)
+			local p = players:GetPlayerFromCharacter(i.Parent)
 			if p ~= player and p ~= nil and Holder:FindFirstChild(p.Name) then
 				pcall(function()
 					UpdateFuncs[p]()
@@ -1884,9 +1922,17 @@ else
 
 	function toggleESP()
 		if ESPEnabled == false then
-			ESPEnabled = true
+			if GESPEnabled then
+				GESPEnabled = false
+				ESPEnabled = true
+				ESPGold.Text = "Standard ESP Enabled"
+				wait(1)
+				ESPGold.Text = "(G) Detailed ESP (Off) [M]"
+			else
+				ESPEnabled = true
+			end
 			ESP.Text = "ESP (On) [B]"
-			for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+			for i,v in pairs(players:GetPlayers()) do
 				spawn(function() pcall(LoadPlayer, v) end)
 			end
 		else
@@ -1899,6 +1945,218 @@ else
 	end
 
 	ESP.MouseButton1Down:connect(toggleESP)
+
+	-- Gold ESP
+
+	local ESPGold = Instance.new("TextButton")
+	ESPGold.Name = "ESPGold"
+	if isGold or isMaster then
+		GESPEnabled = true
+		ESPGold.Text = "(G) Detailed ESP (On) [M]"
+	else
+		GESPEnabled = false
+		ESPGold.Text = "(G) Detailed ESP (Off) [M]"
+	end
+	table.insert(buttons, ESPGold)
+
+	local GHolder = Instance.new("Folder", game.CoreGui)
+	GHolder.Name = "ESPGold"
+
+	local GUpdateFuncs = {}
+
+	local GBox = Instance.new("BoxHandleAdornment")
+	GBox.Name = "nilBoxG"
+	GBox.Size = Vector3.new(4, 7, 4)
+	GBox.Color3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
+	GBox.Transparency = 0.7
+	GBox.ZIndex = 0
+	GBox.AlwaysOnTop = true
+	GBox.Visible = true
+
+	local GNameTag = Instance.new("BillboardGui")
+	GNameTag.Name = "nilNameTagG"
+	GNameTag.Enabled = true
+	GNameTag.Size = UDim2.new(0, 200, 0, 50)
+	GNameTag.AlwaysOnTop = true
+	GNameTag.StudsOffset = Vector3.new(0, 3.6, 0)
+
+	local GTag = Instance.new("TextLabel", GNameTag)
+	GTag.Name = "GTag"
+	GTag.BackgroundTransparency = 1
+	GTag.Position = UDim2.new(0, -50, 0, 0)
+	GTag.Size = UDim2.new(0, 300, 0, 20)
+	GTag.TextSize = 20
+	GTag.TextColor3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
+	GTag.TextStrokeColor3 = Color3.new(0 / 255, 0 / 255, 0 / 255)
+	GTag.TextStrokeTransparency = 0.4
+	GTag.Text = "Not Available"
+	GTag.Font = Enum.Font.Sarpanch
+	GTag.TextScaled = false
+	GTag.TextTransparency = 0
+
+	function GLoadCharacter(v)
+		
+		local tblPlayerData = {}
+		RSR:WaitForChild("PlayerData").OnClientEvent:Connect(function(v, tblData)
+			tblPlayerData[v] = tblData
+		end)
+		
+		if v ~= player then
+			repeat wait() until v.Character ~= nil
+			v.Character:WaitForChild("Humanoid")
+			local vHolder = GHolder:FindFirstChild(v.Name)
+			vHolder:ClearAllChildren()
+
+			local b = GBox:Clone()
+			b.Name = v.Name .. "GBox"
+			b.Adornee = v.Character.HumanoidRootPart
+			b.Parent = vHolder
+
+			local t = GNameTag:Clone()
+			t.Name = v.Name .. "GNameTag"
+			t.Parent = vHolder
+			t.Adornee = v.Character:WaitForChild("HumanoidRootPart", 5)
+			if not t.Adornee then
+				return GUnloadCharacter(v)
+			end
+			t.GTag.Text = v.Name
+			t.Enabled = true
+			wait()
+
+			local function GUpdateNameTag()
+				if not pcall(function()
+						-- v.Character.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+						local maxh = math.ceil(v.Character.Humanoid.MaxHealth * 10)
+						local h = math.ceil(v.Character.Humanoid.Health * 10)
+						local strh = "H: " .. (not(maxh == 0) and tostring(math.ceil(100 * h / maxh)) or 0) .. "% [" .. tostring(h) .. "|" .. tostring(maxh) .. "]"
+						--
+						local maxm = tblPlayerData[v] and math.ceil(tblPlayerData[v].MaxMana * 10) or 1000
+						local m = tblPlayerData[v] and math.ceil(tblPlayerData[v].Mana * 10) or 1000
+						local strm = "M: " .. (not(maxm == 0) and tostring(math.ceil(100 * m / maxm)) or 0) .. "% [" .. tostring(m) .. "|" .. tostring(maxm) .. "]"
+						--
+						local maxs = tblPlayerData[v] and math.ceil(tblPlayerData[v].MaxStamina * 10) or 1000
+						local s = tblPlayerData[v] and math.ceil(tblPlayerData[v].Stamina * 10) or 1000
+						local strs =  "S: " .. (not(maxs == 0) and tostring(math.ceil(100 * s / maxs)) or 0) .. "% [" .. tostring(s) .. "|" .. tostring(maxs) .. "]"
+
+						t.GTag.Text = v.Name .. ("\n" .. strh) .. ("\n" .. strm) .. ("\n" .. strs)
+						
+						if GESPEnabled then
+							t.GTag.TextTransparency = 0
+							b.Transparency = 0.7
+						else
+							t.GTag.TextTransparency = 1
+							b.Transparency = 1
+						end
+						if h / maxh == 1 then
+							t.GTag.TextColor3 = Color3.fromRGB(255, 255, 255)
+							b.Color3 = Color3.fromRGB(255, 255, 255)
+						elseif h / maxh == 0 then
+							t.GTag.TextColor3 = Color3.fromRGB(0, 0, 0)
+							b.Color3 = Color3.fromRGB(0, 0, 0)
+						else
+							t.GTag.TextColor3 = Color3.fromRGB(192, (192 * (h / maxh)), (192 * (h / maxh)))
+							b.Color3 = Color3.fromRGB(192, (192 * (h / maxh)), (192 * (h / maxh)))
+						end
+					end) then
+					GUpdateFuncs[v] = nil
+				end
+			end
+			GUpdateNameTag()
+			GUpdateFuncs[v] = GUpdateNameTag
+		end
+	end
+
+	function GUnloadCharacter(v)
+		local vHolder = GHolder:FindFirstChild(v.Name)
+		if vHolder and (vHolder:FindFirstChild(v.Name .. "GBox") ~= nil or vHolder:FindFirstChild(v.Name .. "GNameTag") ~= nil) then
+			vHolder:ClearAllChildren()
+		end
+	end
+
+	function GLoadPlayer(v)
+		if v ~= player then
+			local vHolder = Instance.new("Folder", GHolder)
+			vHolder.Name = v.Name
+			v.CharacterAdded:Connect(function()
+				if GESPEnabled == true then
+					pcall(GLoadCharacter, v)
+				end
+			end)
+			v.CharacterRemoving:Connect(function()
+				pcall(GUnloadCharacter, v)
+			end)
+			GLoadCharacter(v)
+		end
+	end
+
+	function GUnloadPlayer(v)
+		GUnloadCharacter(v)
+		local vHolder = GHolder:FindFirstChild(v.Name)
+		if vHolder then
+			vHolder:Destroy()
+		end
+	end
+
+	for i, v in pairs(players:GetPlayers()) do
+		spawn(function() pcall(GLoadPlayer, v) end)
+	end
+
+	players.PlayerAdded:Connect(function(v)
+		pcall(GLoadPlayer, v)
+	end)
+
+	players.PlayerRemoving:Connect(function(v)
+		pcall(GUnloadPlayer, v)
+	end)
+
+	game.ItemChanged:Connect(function(i)
+		if i:IsA("Player") then
+			if GHolder:FindFirstChild(i.Name) then
+				GUnloadCharacter(i)
+				wait()
+				GLoadCharacter(i)
+			end
+		elseif i:IsA("Humanoid") and i.Parent then
+			local p = players:GetPlayerFromCharacter(i.Parent)
+			if p ~= player and p ~= nil and GHolder:FindFirstChild(p.Name) then
+				pcall(function()
+					GUpdateFuncs[p]()
+				end)
+			end
+		end
+	end)
+
+	function toggleESPGold()
+		if isGold or isMaster then
+			if GESPEnabled == false then
+				if ESPEnabled then
+					ESPEnabled = false
+					GESPEnabled = true
+					ESP.Text = "Detailed ESP Enabled"
+					wait(1)
+					ESP.Text = "ESP (Off) [B]"
+				else
+					GESPEnabled = true
+				end
+				ESPGold.Text = "(G) Detailed ESP (On) [M]"
+				for i,v in pairs(players:GetPlayers()) do
+					spawn(function() pcall(GLoadPlayer, v) end)
+				end
+			else
+				GESPEnabled = false
+				ESPGold.Text = "(G) Detailed ESP (Off) [M]"
+				for i, v in pairs(game.Players:GetPlayers()) do
+					spawn(function() pcall(GUnloadPlayer, v) end)
+				end
+			end
+		else
+			ESPGold.Text = "Member Not Gold"
+			wait(3)
+			ESPGold.Text = "(G) Detailed ESP (Off) [M]"
+		end
+	end
+
+	ESPGold.MouseButton1Down:connect(toggleESPGold)
 
 	-- TP to Drops
 
@@ -2035,7 +2293,7 @@ else
 	-- Might get moved later, idunno.
 	function rejoin()
 		local ts = game:GetService("TeleportService")
-		local p = game:GetService("Players").LocalPlayer
+		local p = players.LocalPlayer
 
 		ts:Teleport(game.PlaceId, p)
 	end
@@ -2966,7 +3224,7 @@ else
 				commandBoxOutput.Text = "Preparing for teleport..."
 				wait(3)
 				player.Character.HumanoidRootPart.CFrame = CFrame.new(Vector3.new(0,100003,0))]]
-			elseif string.sub(text, 1, 5) == (prefix .. "info") then
+			elseif string.sub(text, 1, 6) == (prefix .. "info") then
 				if string.sub(text, 7) == "status" then
 					print("The current status of EBGui is " .. status)
 					commandBoxOutput.Text = "EBGui Status: " .. status
@@ -2975,10 +3233,12 @@ else
 					commandBoxOutput.Text = "Check the console for more info!"
 				end
 			elseif string.sub(text, 1, 8) == (prefix .. "update") then
-				if verNum == version then
+				if verNum == current then
 					commandBoxOutput.Text = "No update required!"
+				elseif verNum == last then
+					commandBoxOutput.Text = "Version outdated! Current: " .. current
 				else
-					commandBoxOutput.Text = "Version outdated! Recent: " .. version
+					commandBoxOutput.Text = "bro ur on a dev build or sm"
 				end
             end
 
@@ -3011,7 +3271,7 @@ else
 		end
 	end
 
-	game:GetService("Players").PlayerRemoving:connect(function(player)
+	players.PlayerRemoving:connect(function(player)
 		if target == player.Name then
 			target = game.Players.LocalPlayer.Name
 			commandBoxOutput.Text = "Current Target | (Target RQed!)"
@@ -3084,13 +3344,13 @@ else
 		end
 	end
 
-	for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+	for i, v in pairs(players:GetPlayers()) do
 		v.Chatted:Connect(function(msg)
 			onchat(v, msg)
 		end)
 	end
 
-	game:GetService("Players").PlayerAdded:Connect(function(v)
+	players.PlayerAdded:Connect(function(v)
 		v.Chatted:Connect(function(msg)
 			onchat(v, msg)
 		end)
@@ -3131,7 +3391,7 @@ else
 				[2] = "Continuous Strikes",
 				[3] = {
 					["CF"] = targetChr.HumanoidRootPart.CFrame,
-					["Charge"] = 2
+					["Charge"] = "2"
 				}
 			}
 			RSR.DoMagic:InvokeServer(unpack(args))
@@ -3432,6 +3692,8 @@ else
 					view()
 				elseif input.KeyCode == Enum.KeyCode.B then
 					toggleESP()
+				elseif input.KeyCode == Enum.KeyCode.M then
+					toggleESPGold()
 				elseif input.KeyCode == Enum.KeyCode.LeftBracket then
 					if not closedforever then
 						if not buttonsdebounce then
