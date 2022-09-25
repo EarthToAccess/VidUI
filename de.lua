@@ -199,7 +199,7 @@ else
 
 	local buttonsmain = Instance.new("Frame")
 	buttonsmain.Name = "buttonsmain"
-	buttonsmain.Position = UDim2.new(1.25, 0, 0.45, 0)
+	buttonsmain.Position = UDim2.new(1.25, 0, 0.25, 0)
 	buttonsmain.Size = UDim2.new(0.4, 0, 0.300, 0)
 	table.insert(borders, buttonsmain)
 
@@ -210,7 +210,7 @@ else
 	--if (initiationMode == "Modern") then
 	local commandsmain = Instance.new("Frame")
 	commandsmain.Name = "commandsmain"
-	commandsmain.Position = UDim2.new(1.25, 0, 0.25, 0)
+	commandsmain.Position = UDim2.new(1.25, 0, 0.35, 0)
 	commandsmain.Size = UDim2.new(0.3, 0, 0.200, 0)
 	table.insert(borders, commandsmain)
 	--end
