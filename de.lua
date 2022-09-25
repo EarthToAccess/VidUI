@@ -211,7 +211,7 @@ else
 	local commandsmain = Instance.new("Frame")
 	commandsmain.Name = "commandsmain"
 	commandsmain.Position = UDim2.new(1.25, 0, 0.45, 0)
-	commandsmain.Size = UDim2.new(0.3, 0, 0.175, 0)
+	commandsmain.Size = UDim2.new(0.3, 0, 0.250, 0)
 	table.insert(borders, commandsmain)
 	--end
 
@@ -2695,6 +2695,7 @@ else
 						commandBoxOutput.Text = "Successfully switched the target setting to select!"
 					elseif targetSetting == "closest" then
 						commandBoxOutput.Text = "Successfully switched the target setting to closest!"
+						wait(2)
 						while targetSetting == "closest" do
 							local nearestPlayers = {}
 
@@ -2732,6 +2733,7 @@ else
 						end
 					elseif targetSetting == "farthest" then
 						commandBoxOutput.Text = "Successfully switched the target setting to farthest!"
+						wait(2)
 						while targetSetting == "farthest" do
 							local nearestPlayers = {}
 
@@ -2769,6 +2771,7 @@ else
 						end
 					elseif targetSetting == "lowhp" then
 						commandBoxOutput.Text = "Successfully switched the target setting to lowhp!"
+						wait(2)
 						while targetSetting == "lowhp" do
 							local nearestPlayers = {}
 
@@ -2806,6 +2809,7 @@ else
 						end
 					elseif targetSetting == "highhp" then
 						commandBoxOutput.Text = "Successfully switched the target setting to highhp!"
+						wait(2)
 						while targetSetting == "highhp" do
 							local nearestPlayers = {}
 
