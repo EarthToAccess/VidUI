@@ -3473,7 +3473,7 @@ else
 				[1] = "Explosion",
 				[2] = "Explosive Leap",
 				[3] = {
-					["LastPos"] = target.HumanoidRootPart.Position
+					["LastPos"] = targetChr.HumanoidRootPart.Position
 				}
 			}
 			DM:InvokeServer(unpack(args))
