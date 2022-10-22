@@ -3481,7 +3481,7 @@ else
 
 		if DyingStarEnabled then
 			DCM:FireServer("Solar", "Dying Star")
-			DM:InvokeServer("Solar", "Dying Star", target.HumanoidRootPart.CFrame)
+			DM:InvokeServer("Solar", "Dying Star", targetChr.HumanoidRootPart.CFrame)
 		end
 
 		if InstantFistEnabled and ff() == false then
