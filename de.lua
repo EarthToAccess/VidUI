@@ -948,10 +948,12 @@ else
 			else
 				DyingStarEnabled = true
 				DyingStarHack.Text = "(G) Dying Star Hack (On)"
+			end
 		else
 			DyingStarHack.Text = "Member Not Gold"
 			wait(1)
 			DyingStarHack.Text = "(G) Dying Star Hack (Off)"
+		end
 	end)
 
 	---- Blasts
