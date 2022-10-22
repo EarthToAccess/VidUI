@@ -14,7 +14,7 @@ local masterlist = {
 }
 
 local goldlist = {
-	"gold_092022_RightCork_898423"
+	"gold_102022_SillyTeacup_168549"
 }
 
 local players = game:GetService("Players")
@@ -52,7 +52,7 @@ elseif not EBGuiKey and not isBlocked and not isMaster then
     warn("|       You'll need to find the appropriate key first.      |")
     warn("|                                                           |")
     warn("=============================================================")
-elseif EBGuiKey ~= "092022_WastefulCannon_982199" and not isBlocked and not isMaster then
+elseif EBGuiKey ~= "102022_SourHairband_024947" and not isBlocked and not isMaster then
     warn("=======================[[ ATTENTION ]]=======================")
     warn("|                                                           |")
     warn("|               Your unlock key is incorrect.               |")
@@ -170,7 +170,6 @@ else
 			InertiaGravityEnabled = nil
 			ClickTPEnabled = nil
 			FreezeEnabled = nil
-			ThrustEnabled = nil
 			ThrustPower = nil
 			viewing = nil
 			TPTargetEnabled = nil
@@ -190,6 +189,7 @@ else
 			HyperangEnabled = nil
 			CreationHoldEnabled = nil
 			ReaperUltEnabled = nil
+			AimbotEnabled = nil
 		end
 	end)
 
@@ -200,7 +200,7 @@ else
 	local buttonsmain = Instance.new("Frame")
 	buttonsmain.Name = "buttonsmain"
 	buttonsmain.Position = UDim2.new(1.25, 0, 0.65, 0)
-	buttonsmain.Size = UDim2.new(0.4, 0, 0.3, 0)
+	buttonsmain.Size = UDim2.new(0.4, 0, 0.225, 0)
 	table.insert(borders, buttonsmain)
 
 	buttonsdebounce = false
@@ -210,7 +210,7 @@ else
 	--if (initiationMode == "Modern") then
 	local commandsmain = Instance.new("Frame")
 	commandsmain.Name = "commandsmain"
-	commandsmain.Position = UDim2.new(1.25, 0, 0.25, 0)
+	commandsmain.Position = UDim2.new(1.25, 0, 0.45, 0)
 	commandsmain.Size = UDim2.new(0.3, 0, 0.175, 0)
 	table.insert(borders, commandsmain)
 	--end
@@ -1297,6 +1297,33 @@ else
 	end)
 
 	---- Miscellaneous
+
+	-- Aimbot || Currently under development
+	--[[
+	local Aimbot = Instance.new("TextButton")
+	Aimbot.Name = "Aimbot"
+	Aimbot.Text = "(G) Aimbot (Off)"
+	table.insert(buttons, Aimbot)
+
+	function toggleAimbot()
+		if (not AimbotEnabled) and (isGold or isMaster) then
+			AimbotEnabled = true
+			Aimbot.Text = "(G) Aimbot (On)"
+			while AimbotEnabled do
+				BeginTracking()
+			end
+		elseif AimbotEnabled and (isGold or isMaster) then
+			AimbotEnabled = false
+			Aimbot.Text = "(G) Aimbot (Off)"
+		elseif not (isGold or isMaster) then
+			Aimbot.Text = "Member Not Gold"
+			wait(3)
+			Aimbot.Text = "(G) Aimbot (Off)"
+		end
+	end
+
+	Aimbot.MouseButton1Down:connect(toggleAimbot)]]
+
 	-- Shard Colors
 
 	local RandomColors = Instance.new("TextButton")
@@ -1308,31 +1335,24 @@ else
 	local ShardColorEnabled = false
 
 	local function shardRandomizer()
-		for i, child in pairs(game.Workspace[".Ignore"][".ServerEffects"]:GetChildren()) do
-			if not child.Name == "Shard" then print("Child not a Shard")
-			elseif child.Name == "Shard" and not child:FindFirstChild("CCBool") then
-				xpcall(function()
-					child.BrickColor = BrickColor.new(ColorsList[math.random(1,9)])
-				end, function(e)
-					print("Encountered an error! xpcall says:", e)
-					warn("[traceback] ", debug.traceback())
-				end)
-				local CCBool = Instance.new("BoolValue")
-				CCBool.Name = "CCBool"
-				CCBool.Parent = child
-				CCBool.Value = true
-			elseif child.Name == "Shard" and child:FindFirstChild("CCBool").Value then end
+		for i, v in pairs(game.Workspace[".Ignore"][".ServerEffects"]:GetChildren()) do
+			if v.Name == "Shard" and not v:FindFirstChild("shardChanged") then
+				v.BrickColor = BrickColor.new(ColorsList[math.random(1,9)])
+				local shardChanged = Instance.new("BoolValue")
+				shardChanged.Name = "shardChanged"
+				shardChanged.Parent = child
+				shardChanged.Value = true
+			elseif v.Name == "Shard" and v:FindFirstChild("shardChanged").Value then end
 		end
 	end
 
 	RandomColors.MouseButton1Down:connect(function()
 		if ShardColorEnabled == false then
 			ShardColorEnabled = true
-			print("Turned on Random Shard Colors")
 			RandomColors.Text = "Random Shard Colors (On)"
 			while ShardColorEnabled do
 				shardRandomizer()
-				wait(1)
+				wait(.5)
 			end
 		else
 			ShardColorEnabled = false
@@ -1983,7 +2003,7 @@ else
 	local GTag = Instance.new("TextLabel", GNameTag)
 	GTag.Name = "GTag"
 	GTag.BackgroundTransparency = 1
-	GTag.Position = UDim2.new(0, -50, 0, 0)
+	GTag.Position = UDim2.new(0, -150, 0, 0)
 	GTag.Size = UDim2.new(0, 300, 0, 20)
 	GTag.TextSize = 20
 	GTag.TextColor3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
@@ -2325,21 +2345,6 @@ else
 		v.LayoutOrder = i
 		v.Parent = mainframe
 	end
-
-	--[[for i, v in pairs(buttons) do
-		v.BackgroundColor3 = Color3.fromRGB(236, 175, 20)
-		v.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		v.BorderSizePixel = 2
-		v.Position = UDim2.new(0, 0, 0, 0)
-		v.Size = UDim2.new(0, 0, 0, 0)
-		v.Font = Enum.Font.Sarpanch
-		v.TextColor3 = Color3.fromRGB(251, 251, 255)
-		v.TextScaled = true
-		v.TextSize = 14.000
-		v.TextWrapped = true
-		v.LayoutOrder = i
-		v.Parent = mainframe
-	end]]
 
 	-- commandBox
 
@@ -3378,7 +3383,7 @@ else
 		-- Exploit function. When C is pressed and one of these are "true", it will fire it.
 		local targetChr = game.Players[target].Character
 
-		if ReaperUltEnabled then
+		if ReaperUltEnabled and ff() == true then
 			RSR.DoClientMagic:FireServer("Reaper", "Reaper's Rage")
 			local args = {
 				[1] = "Reaper",
@@ -3388,7 +3393,7 @@ else
 			RSR.DoMagic:InvokeServer(unpack(args))
 		end		
 
-		if CreationHoldEnabled then
+		if CreationHoldEnabled and ff() == true then
 			RSR.DoClientMagic:FireServer("Creation", "Continuous Strikes")
 			local args = {
 				[1] = "Creation",
@@ -3401,12 +3406,12 @@ else
 			RSR.DoMagic:InvokeServer(unpack(args))
 		end
 
-		if HyperangEnabled then
+		if HyperangEnabled and ff() == true then
 			RSR.DoClientMagic:FireServer("Technology", "Hyperang")
 			RSR.DoMagic:InvokeServer("Technology", "Hyperang", targetChr.HumanoidRootPart.CFrame)
 		end
 
-		if DarkAoeEnabled then
+		if DarkAoeEnabled and ff() == true then
 			RSR.DoClientMagic:FireServer("Darkness", "Murky Missiles")
 			RSR.DoMagic:InvokeServer("Darkness", "Murky Missiles", {lastMousePosition = CFrame.new(targetChr.HumanoidRootPart.Position)})
 		end
@@ -3633,6 +3638,16 @@ else
 		end
 	end
 
+	--[[local function BeginTracking()
+		local c = game:GetService("Workspace").CurrentCamera
+		local hb = game:GetService("RunService").Heartbeat
+		local m = player:GetMouse()
+		local p = c:WorldToScreenPoint(players[target].Character.HumanoidRootPart.Position)
+		hb:connect(function(step)
+			mousemoveabs(p.X, (p.Y + 25))
+		end)
+	end]] -- For Aimbot, currently under development
+
 	-- UIS
 
 	local UIS = game:GetService("UserInputService")
@@ -3649,6 +3664,8 @@ else
 					if string.sub(commandBox.Text, string.len(commandBox.Text), string.len(commandBox.Text)) == "\\" then
 						commandBox.Text = string.sub(commandBox.Text, 1, string.len(commandBox.Text) - 1)
 					end
+				--[[elseif input.KeyCode == Enum.KeyCode.L then
+					toggleAimbot()]]
 				elseif input.KeyCode == Enum.KeyCode.C then
 					exploit()
 				elseif input.KeyCode == Enum.KeyCode.U then
@@ -3730,7 +3747,7 @@ else
 					if commandsopened == false then
 						commandsopened = true
 						commandsmain:TweenPosition(
-							UDim2.new(1, 0, 0.25, 0),
+							UDim2.new(1, 0, 0.45, 0),
 							"Out",
 							"Sine",
 							.5,
@@ -3739,7 +3756,7 @@ else
 					else
 						commandsopened = false
 						commandsmain:TweenPosition(
-							UDim2.new(1.25, 0, 0.25, 0),
+							UDim2.new(1.25, 0, 0.45, 0),
 							"In",
 							"Sine",
 							.5,
@@ -3775,7 +3792,7 @@ else
 	)
 
 	commandsmain:TweenPosition(
-		UDim2.new(1, 0, 0.25, 0),
+		UDim2.new(1, 0, 0.45, 0),
 		"Out",
 		"Sine",
 		.5,
