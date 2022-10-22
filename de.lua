@@ -61,7 +61,7 @@ elseif EBGuiKey ~= "102022_SourHairband_024947" and not isBlocked and not isMast
     warn("=============================================================")
 else
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/EarthToAccess/EBGui/main/bin/info.lua'))()
-	local verNum = "v2.8.3"
+	local verNum = "v2.9"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
@@ -291,7 +291,7 @@ else
 	Details.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	Details.BackgroundTransparency = 1.000
 	Details.BorderColor3 = Color3.fromRGB(128, 128, 128)
-	Details.Position = UDim2.new(0, 0, 0.0141414143, 0)
+	Details.Position = UDim2.new(0, 0, 0.015, 0)
 	Details.Size = UDim2.new(1, 0, 0.15, 0)
 	Details.Font = Enum.Font.Sarpanch
 	if not isGold then
@@ -876,6 +876,25 @@ else
 		end
 	end)
 
+	-- Orbs of Enlightenment Hack
+
+	local LightOrbsHack = Instance.new("TextButton")
+	LightOrbsHack.Name = "LightOrbsHack"
+	LightOrbsHack.Text = "Light Orbs Hack (Off)"
+	table.insert(buttons, LightOrbsHack)
+
+	local lOrbsEnabled = false
+
+	LightOrbsHack.MouseButton1Down:connect(function()
+		if lOrbsEnabled then
+			lOrbsEnabled = false
+			LightOrbsHack.Text = "Light Orbs Hack (Off)"
+		else
+			lOrbsEnabled = true
+			LightOrbsHack.Text = "Light Orbs Hack (On)"
+		end
+	end)
+
 	-- Vigor Gyration Hack
 
 	local VigGyratHack = Instance.new("TextButton")
@@ -910,6 +929,29 @@ else
 			StormBulletsEnabled = false
 			Barrage.Text = "Barrage Hack (Off)"
 		end
+	end)
+
+	-- Dying Star Hack
+
+	local DyingStarHack = Instance.new("TextButton")
+	DyingStarHack.Name = "DyingStarHack"
+	DyingStarHack.Text = "(G) Dying Star Hack (Off)"
+	table.insert(buttons, DyingStarHack)
+
+	local DyingStarEnabled = false
+
+	DyingStarHack.MouseButton1Down:connect(function()
+		if isGold or isMaster then
+			if DyingStarEnabled then
+				DyingStarEnabled = false
+				DyingStarHack.Text = "(G) Dying Star Hack (Off)"
+			else
+				DyingStarEnabled = true
+				DyingStarHack.Text = "(G) Dying Star Hack (On)"
+		else
+			DyingStarHack.Text = "Member Not Gold"
+			wait(1)
+			DyingStarHack.Text = "(G) Dying Star Hack (Off)"
 	end)
 
 	---- Blasts
@@ -1658,6 +1700,44 @@ else
 				InfSprintEnabled = false
 				InfSprint.Text = "(G) Infinite Sprint (Off)"
 			end				
+		end
+	end)
+
+	-- Instant Explosive Leap
+
+	local ExplosionHack = Instance.new("TextButton")
+	ExplosionHack.Name = "ExplosionHack"
+	ExplosionHack.Text = "Instant Leap Stun (Off)"
+	table.insert(buttons, ExplosionHack)
+
+	local LeapStunEnabled = false
+
+	ExplosionHack.MouseButton1Down:connect(function()
+		if LeapStunEnabled then
+			LeapStunEnabled = false
+			ExplosionHack.Text = "Instant Leap Stun (Off)"
+		else
+			LeapStunEnabled = true
+			ExplosionHack.Text = "Instant Leap Stun (On)"
+		end
+	end)
+
+	-- Instant Rock Fist
+
+	local RockFistHack = Instance.new("TextButton")
+	RockFistHack.Name = "RockFistHack"
+	RockFistHack.Text = "Instant Rock Fist (Off)"
+	table.insert(buttons, RockFistHack)
+
+	local InstantFistEnabled = false
+
+	RockFistHack.MouseButton1Down:connect(function()
+		if InstantFistEnabled then
+			InstantFistEnabled = false
+			RockFistHack.Text = "Instant Rock Fist (Off)"
+		else
+			InstantFistEnabled = true
+			RockFistHack.Text = "Instant Rock Fist (On)"
 		end
 	end)
 
@@ -3370,31 +3450,96 @@ else
 	local function ff()
 		if smartAttack == true then
 			if game.Players[target].Character:FindFirstChild("ForceField") then
-				return false
-			else
 				return true
+			else
+				return false
 			end
 		else
-			return true
+			return false
 		end
 	end
 
 	function exploit()
 		-- Exploit function. When C is pressed and one of these are "true", it will fire it.
 		local targetChr = game.Players[target].Character
+		local DCM = RSR.DoClientMagic
+		local DM = RSR.DoMagic
 
-		if ReaperUltEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Reaper", "Reaper's Rage")
+		if LeapStunEnabled then
+			DCM:FireServer("Explosion", "Explosive Leap")
+			local args = {
+				[1] = "Explosion",
+				[2] = "Explosive Leap",
+				[3] = {
+					["LastPos"] = target.HumanoidRootPart.Position
+				}
+			}
+			DM:InvokeServer(unpack(args))
+		end
+
+		if DyingStarEnabled then
+			DCM:FireServer("Solar", "Dying Star")
+			DM:InvokeServer("Solar", "Dying Star", target.HumanoidRootPart.CFrame)
+		end
+
+		if InstantFistEnabled and ff() == false then
+			DCM:FireServer("Earth", "Rock Fist")
+			local args = {
+				[1] = "Earth",
+				[2] = "Rock Fist",
+				[3] = {
+					["Grounded"] = true
+				}
+			}
+			DM:InvokeServer(unpack(args))
+		end
+
+		if lOrbsEnabled and ff() == false then
+			DCM:FireServer("Light","Orbs of Enlightenment")
+			local args = {
+				[1] = "Light",
+				[2] = "Orbs of Enlightenment",
+				[3] = {
+					["Coordinates"] = {
+						[1] = targetChr.HumanoidRootPart.CFrame,
+						[2] = targetChr.HumanoidRootPart.CFrame,
+						[3] = targetChr.HumanoidRootPart.CFrame,
+						[4] = targetChr.HumanoidRootPart.CFrame,
+						[5] = targetChr.HumanoidRootPart.CFrame,
+						[6] = targetChr.HumanoidRootPart.CFrame,
+						[7] = targetChr.HumanoidRootPart.CFrame,
+						[8] = targetChr.HumanoidRootPart.CFrame,
+						[9] = targetChr.HumanoidRootPart.CFrame,
+						[10] = targetChr.HumanoidRootPart.CFrame,
+						[11] = targetChr.HumanoidRootPart.CFrame,
+						[12] = targetChr.HumanoidRootPart.CFrame,
+						[13] = targetChr.HumanoidRootPart.CFrame,
+						[14] = targetChr.HumanoidRootPart.CFrame,
+						[15] = targetChr.HumanoidRootPart.CFrame,
+						[16] = targetChr.HumanoidRootPart.CFrame,
+						[17] = targetChr.HumanoidRootPart.CFrame,
+						[18] = targetChr.HumanoidRootPart.CFrame,
+						[19] = targetChr.HumanoidRootPart.CFrame,
+						[20] = targetChr.HumanoidRootPart.CFrame
+					},
+					["Origin"] = targetChr.HumanoidRootPart.Position
+				}
+			}
+			DM:InvokeServer(unpack(args))
+		end
+
+		if ReaperUltEnabled and ff() == false then
+			DCM:FireServer("Reaper", "Reaper's Rage")
 			local args = {
 				[1] = "Reaper",
 				[2] = "Reaper's Rage",
 				[3] = targetChr.HumanoidRootPart.CFrame
 			}
-			RSR.DoMagic:InvokeServer(unpack(args))
+			DM:InvokeServer(unpack(args))
 		end		
 
-		if CreationHoldEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Creation", "Continuous Strikes")
+		if CreationHoldEnabled and ff() == false then
+			DCM:FireServer("Creation", "Continuous Strikes")
 			local args = {
 				[1] = "Creation",
 				[2] = "Continuous Strikes",
@@ -3403,44 +3548,44 @@ else
 					["Charge"] = "2"
 				}
 			}
-			RSR.DoMagic:InvokeServer(unpack(args))
+			DM:InvokeServer(unpack(args))
 		end
 
-		if HyperangEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Technology", "Hyperang")
-			RSR.DoMagic:InvokeServer("Technology", "Hyperang", targetChr.HumanoidRootPart.CFrame)
+		if HyperangEnabled and ff() == false then
+			DCM:FireServer("Technology", "Hyperang")
+			DM:InvokeServer("Technology", "Hyperang", targetChr.HumanoidRootPart.CFrame)
 		end
 
-		if DarkAoeEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Darkness", "Murky Missiles")
-			RSR.DoMagic:InvokeServer("Darkness", "Murky Missiles", {lastMousePosition = CFrame.new(targetChr.HumanoidRootPart.Position)})
+		if DarkAoeEnabled and ff() == false then
+			DCM:FireServer("Darkness", "Murky Missiles")
+			DM:InvokeServer("Darkness", "Murky Missiles", {lastMousePosition = CFrame.new(targetChr.HumanoidRootPart.Position)})
 		end
 
 		if DispersionEnabled then
-			RSR.DoClientMagic:FireServer("Storm", "Lightning Dispersion")
-			RSR.DoMagic:InvokeServer("Storm", "Lightning Dispersion", {Grounded = true})
+			DCM:FireServer("Storm", "Lightning Dispersion")
+			DM:InvokeServer("Storm", "Lightning Dispersion", {Grounded = true})
 		end
 
-		if DoubleRayEnabled and ff() == true then
+		if DoubleRayEnabled and ff() == false then
 			local args = {
 				[1] = "Solar",
 				[2] = "Double Ray"
 			}			
-			RSR.DoClientMagic:FireServer(unpack(args))			
+			DCM:FireServer(unpack(args))			
 			local args = {
 				[1] = "Solar",
 				[2] = "Double Ray",
 				[3] = targetChr.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(90), 0, 0)
 			}			
-			RSR.DoMagic:InvokeServer(unpack(args))
+			DM:InvokeServer(unpack(args))
 		end
 
-		if StormBulletsEnabled and ff() == true then
+		if StormBulletsEnabled and ff() == false then
 			local args = {
 				[1] = "Storm",
 				[2] = "Lightning Barrage"
 			}			
-			RSR.DoClientMagic:FireServer(unpack(args))			
+			DCM:FireServer(unpack(args))			
 			local args = {
 				[1] = "Storm",
 				[2] = "Lightning Barrage",
@@ -3448,29 +3593,29 @@ else
 					["Direction"] = targetChr.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(90), 0, 0)
 				}
 			}			
-			RSR.DoMagic:InvokeServer(unpack(args))
+			DM:InvokeServer(unpack(args))
 		end
 
-		if OrbitalHackEnabled and ff() == true then
+		if OrbitalHackEnabled and ff() == false then
 			local args = {
 				[1] = "Technology",
 				[2] = "Orbital Strike"
 			}
-			RSR.DoClientMagic:FireServer(unpack(args))
+			DCM:FireServer(unpack(args))
 			local args = {
 				[1] = "Technology",
 				[2] = "Orbital Strike",
 				[3] = CFrame.new(targetChr.HumanoidRootPart.Position)
 			}
-			RSR.DoMagic:InvokeServer(unpack(args))
+			DM:InvokeServer(unpack(args))
 		end
 
-		if VigorHackEnabled and ff() == true then
+		if VigorHackEnabled and ff() == false then
 			local args = {
 				[1] = "Spirit",
 				[2] = "Vigor Gyration"
 			}
-			RSR.DoClientMagic:FireServer(unpack(args))
+			DCM:FireServer(unpack(args))
 			local args = {
 				[1] = "Spirit",
 				[2] = "Vigor Gyration",
@@ -3488,15 +3633,15 @@ else
 					[11] = CFrame.new(targetChr.HumanoidRootPart.Position)
 				}
 			}
-			RSR.DoMagic:InvokeServer(unpack(args))
+			DM:InvokeServer(unpack(args))
 		end
 
-		if AsteroidBeltEnabled and ff() == true then
+		if AsteroidBeltEnabled and ff() == false then
 			local args = {
 				[1] = "Space",
 				[2] = "Asteroid Belt"
 			}
-			RSR.DoClientMagic:FireServer(unpack(args))
+			DCM:FireServer(unpack(args))
 			local args = {
 				[1] = "Space",
 				[2] = "Asteroid Belt",
@@ -3514,127 +3659,127 @@ else
 					[11] = CFrame.new(targetChr.HumanoidRootPart.Position)
 				}
 			}
-			RSR.DoMagic:InvokeServer(unpack(args))
+			DM:InvokeServer(unpack(args))
 		end
 
-		if BlazeColumnEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Fire", "Blaze Column", Vector3.new(targetChr.HumanoidRootPart.Position))
-			RSR.DoMagic:InvokeServer("Fire", "Blaze Column", CFrame.new(targetChr.HumanoidRootPart.Position))
+		if BlazeColumnEnabled and ff() == false then
+			DCM:FireServer("Fire", "Blaze Column", Vector3.new(targetChr.HumanoidRootPart.Position))
+			DM:InvokeServer("Fire", "Blaze Column", CFrame.new(targetChr.HumanoidRootPart.Position))
 		end
 
-		if VineTrapEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Nature", "Vine Trap", Vector3.new(targetChr.HumanoidRootPart.Position))
-			RSR.DoMagic:InvokeServer("Nature", "Vine Trap", CFrame.new(targetChr.HumanoidRootPart.Position))
+		if VineTrapEnabled and ff() == false then
+			DCM:FireServer("Nature", "Vine Trap", Vector3.new(targetChr.HumanoidRootPart.Position))
+			DM:InvokeServer("Nature", "Vine Trap", CFrame.new(targetChr.HumanoidRootPart.Position))
 		end
 
-		if PlasmaImplosionEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Plasma", "Plasma Implosion", Vector3.new(targetChr.HumanoidRootPart.Position))
-			RSR.DoMagic:InvokeServer("Plasma", "Plasma Implosion", CFrame.new(targetChr.HumanoidRootPart.Position))
+		if PlasmaImplosionEnabled and ff() == false then
+			DCM:FireServer("Plasma", "Plasma Implosion", Vector3.new(targetChr.HumanoidRootPart.Position))
+			DM:InvokeServer("Plasma", "Plasma Implosion", CFrame.new(targetChr.HumanoidRootPart.Position))
 		end
 
-		if SlimeBuddiesEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Slime", "Slime Buddies")
-			RSR.DoMagic:InvokeServer("Slime", "Slime Buddies", targetChr.HumanoidRootPart.CFrame)
+		if SlimeBuddiesEnabled and ff() == false then
+			DCM:FireServer("Slime", "Slime Buddies")
+			DM:InvokeServer("Slime", "Slime Buddies", targetChr.HumanoidRootPart.CFrame)
 		end
 
-		if CrystalArmamentEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Crystal", "Crystal Armament")
-			RSR.DoMagic:InvokeServer("Crystal", "Crystal Armament", {LastPosition = targetChr.HumanoidRootPart.Position + Vector3.new(0, 15, 0)})
+		if CrystalArmamentEnabled and ff() == false then
+			DCM:FireServer("Crystal", "Crystal Armament")
+			DM:InvokeServer("Crystal", "Crystal Armament", {LastPosition = targetChr.HumanoidRootPart.Position + Vector3.new(0, 15, 0)})
 		end
 
-		if GravitalGlobeEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Gravity", "Gravital Globe")
-			RSR.DoMagic:InvokeServer("Gravity", "Gravital Globe", {lastPos = targetChr.HumanoidRootPart.Position + Vector3.new(0, 15, 0)})
+		if GravitalGlobeEnabled and ff() == false then
+			DCM:FireServer("Gravity", "Gravital Globe")
+			DM:InvokeServer("Gravity", "Gravital Globe", {lastPos = targetChr.HumanoidRootPart.Position + Vector3.new(0, 15, 0)})
 		end
 
-		if GravitationalFieldEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Gravity", "Gravitational Field")
-			RSR.DoMagic:InvokeServer("Gravity", "Gravitational Field", targetChr.HumanoidRootPart.CFrame - Vector3.new(0, 15, 0))
+		if GravitationalFieldEnabled and ff() == false then
+			DCM:FireServer("Gravity", "Gravitational Field")
+			DM:InvokeServer("Gravity", "Gravitational Field", targetChr.HumanoidRootPart.CFrame - Vector3.new(0, 15, 0))
 		end
 
-		if AmauroticLambentEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Light", "Amaurotic Lambent")
-			RSR.DoMagic:InvokeServer("Light", "Amaurotic Lambent", {lastPos = targetChr.HumanoidRootPart.Position})
+		if AmauroticLambentEnabled and ff() == false then
+			DCM:FireServer("Light", "Amaurotic Lambent")
+			DM:InvokeServer("Light", "Amaurotic Lambent", {lastPos = targetChr.HumanoidRootPart.Position})
 		end
 
-		if AblazeJudgementHackEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Light", "Ablaze Judgement")
-			RSR.DoMagic:InvokeServer("Light", "Ablaze Judgement", {Origin = targetChr.HumanoidRootPart.Position - Vector3.new(0, 25, 0), orbPos = targetChr.HumanoidRootPart.Position - Vector3.new(0, 10, 0)})
+		if AblazeJudgementHackEnabled and ff() == false then
+			DCM:FireServer("Light", "Ablaze Judgement")
+			DM:InvokeServer("Light", "Ablaze Judgement", {Origin = targetChr.HumanoidRootPart.Position - Vector3.new(0, 25, 0), orbPos = targetChr.HumanoidRootPart.Position - Vector3.new(0, 10, 0)})
 		end
 
-		if VoidOpeningHackEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Void", "Void Opening")
-			RSR.DoMagic:InvokeServer("Void", "Void Opening", {pos = targetChr.HumanoidRootPart.Position - Vector3.new(0, 150, 0)})
+		if VoidOpeningHackEnabled and ff() == false then
+			DCM:FireServer("Void", "Void Opening")
+			DM:InvokeServer("Void", "Void Opening", {pos = targetChr.HumanoidRootPart.Position - Vector3.new(0, 150, 0)})
 		end
 
 		if SkeletonGrabEnabled then
-			RSR.DoClientMagic:FireServer("Nightmare", "Skeleton Grab")
-			RSR.DoMagic:InvokeServer("Nightmare", "Skeleton Grab", targetChr.HumanoidRootPart.CFrame)
+			DCM:FireServer("Nightmare", "Skeleton Grab")
+			DM:InvokeServer("Nightmare", "Skeleton Grab", targetChr.HumanoidRootPart.CFrame)
 		end
 
 		if GenesisRayEnabled then
-			RSR.DoClientMagic:FireServer("Time", "Genesis Ray", player.Character.HumanoidRootPart.Position)
-			RSR.DoMagic:InvokeServer("Time", "Genesis Ray", {lv = Vector3.new(0, 0, 0), charge = GRCharge})
+			DCM:FireServer("Time", "Genesis Ray", player.Character.HumanoidRootPart.Position)
+			DM:InvokeServer("Time", "Genesis Ray", {lv = Vector3.new(0, 0, 0), charge = GRCharge})
 		end
 
-		if TheWorldEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Time", "The World", targetChr.HumanoidRootPart.Position)
-			RSR.DoMagic:InvokeServer("Time", "The World", {rhit = targetChr.HumanoidRootPart, norm = Vector3.new(0, 0, 0), rpos = targetChr.HumanoidRootPart.Position})
+		if TheWorldEnabled and ff() == false then
+			DCM:FireServer("Time", "The World", targetChr.HumanoidRootPart.Position)
+			DM:InvokeServer("Time", "The World", {rhit = targetChr.HumanoidRootPart, norm = Vector3.new(0, 0, 0), rpos = targetChr.HumanoidRootPart.Position})
 		end
 
-		if PolarisEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Aurora", "Polaris")
-			RSR.DoMagic:InvokeServer("Aurora", "Polaris", targetChr.HumanoidRootPart.CFrame)
+		if PolarisEnabled and ff() == false then
+			DCM:FireServer("Aurora", "Polaris")
+			DM:InvokeServer("Aurora", "Polaris", targetChr.HumanoidRootPart.CFrame)
 		end
 
 		if ControlledEchoesEnabled and EchoesPhase ~= nil then
-			RSR.DoClientMagic:FireServer("Sound", "Echoes")
-			RSR.DoMagic:InvokeServer("Sound", "Echoes", {EchoesPhase, mouse.Hit.p})
+			DCM:FireServer("Sound", "Echoes")
+			DM:InvokeServer("Sound", "Echoes", {EchoesPhase, mouse.Hit.p})
 		end
 
-		if ShatteringEruptionEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Explosion", "Shattering Eruption")
-			RSR.DoMagic:InvokeServer("Explosion", "Shattering Eruption", targetChr.HumanoidRootPart.CFrame)
+		if ShatteringEruptionEnabled and ff() == false then
+			DCM:FireServer("Explosion", "Shattering Eruption")
+			DM:InvokeServer("Explosion", "Shattering Eruption", targetChr.HumanoidRootPart.CFrame)
 		end
 
-		if IllusiveAtakeEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Illusion", "Illusive Atake")
-			RSR.DoMagic:InvokeServer("Illusion", "Illusive Atake", targetChr.HumanoidRootPart.CFrame)
+		if IllusiveAtakeEnabled and ff() == false then
+			DCM:FireServer("Illusion", "Illusive Atake")
+			DM:InvokeServer("Illusion", "Illusive Atake", targetChr.HumanoidRootPart.CFrame)
 		end
 
-		if EtherealAcumenEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Illusion", "Ethereal Acumen")
-			RSR.DoMagic:InvokeServer("Illusion", "Ethereal Acumen", targetChr.HumanoidRootPart.CFrame)
+		if EtherealAcumenEnabled and ff() == false then
+			DCM:FireServer("Illusion", "Ethereal Acumen")
+			DM:InvokeServer("Illusion", "Ethereal Acumen", targetChr.HumanoidRootPart.CFrame)
 		end
 
-		if FormidableRoarEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Dragon", "Formidable Roar")
-			RSR.DoMagic:InvokeServer("Dragon", "Formidable Roar", {targetChr.HumanoidRootPart.CFrame, 175})
+		if FormidableRoarEnabled and ff() == false then
+			DCM:FireServer("Dragon", "Formidable Roar")
+			DM:InvokeServer("Dragon", "Formidable Roar", {targetChr.HumanoidRootPart.CFrame, 175})
 		end
 
-		if ToxicBasiliskEnabled and ff() == true then
+		if ToxicBasiliskEnabled and ff() == false then
 			player.Character.HumanoidRootPart.Anchored = true
-			RSR.DoClientMagic:FireServer("Acid", "Toxic Basilisk")
-			RSR.DoMagic:InvokeServer("Acid", "Toxic Basilisk", {Direction = targetChr.HumanoidRootPart.CFrame, Floor = targetChr.HumanoidRootPart.CFrame})
+			DCM:FireServer("Acid", "Toxic Basilisk")
+			DM:InvokeServer("Acid", "Toxic Basilisk", {Direction = targetChr.HumanoidRootPart.CFrame, Floor = targetChr.HumanoidRootPart.CFrame})
 			wait(17.5)
 			if FreezeEnabled == false then
 				player.Character.HumanoidRootPart.Anchored = false
 			end
 		end
 
-		if ArcaneGuardianEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Angel", "Arcane Guardian")
-			RSR.DoMagic:InvokeServer("Angel", "Arcane Guardian", {Position = targetChr.HumanoidRootPart.Position + Vector3.new(0, 50, 0)})
+		if ArcaneGuardianEnabled and ff() == false then
+			DCM:FireServer("Angel", "Arcane Guardian")
+			DM:InvokeServer("Angel", "Arcane Guardian", {Position = targetChr.HumanoidRootPart.Position + Vector3.new(0, 50, 0)})
 		end
 
-		if SplittingSlimeEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Slime", "Splitting Slime")
-			RSR.DoMagic:InvokeServer("Slime", "Splitting Slime", targetChr.HumanoidRootPart.CFrame - Vector3.new(0, 20, 0))
+		if SplittingSlimeEnabled and ff() == false then
+			DCM:FireServer("Slime", "Splitting Slime")
+			DM:InvokeServer("Slime", "Splitting Slime", targetChr.HumanoidRootPart.CFrame - Vector3.new(0, 20, 0))
 		end
 
-		if VirtualZoneEnabled and ff() == true then
-			RSR.DoClientMagic:FireServer("Technology", "Virtual Zone")
-			RSR.DoMagic:InvokeServer("Technology", "Virtual Zone", {targetChr.HumanoidRootPart.Position, Vector3.new(0, 0, 0)})
+		if VirtualZoneEnabled and ff() == false then
+			DCM:FireServer("Technology", "Virtual Zone")
+			DM:InvokeServer("Technology", "Virtual Zone", {targetChr.HumanoidRootPart.Position, Vector3.new(0, 0, 0)})
 		end
 	end
 
@@ -3677,7 +3822,7 @@ else
 				elseif input.KeyCode == Enum.KeyCode.X then
 					if SpectralEmbodimentEnabled then
 						RSR.DoClientMagic:FireServer("Spirit", "Spectral Embodiment")
-						RSR.DoMagic:InvokeServer("Spirit", "Spectral Embodiment")
+						DM:InvokeServer("Spirit", "Spectral Embodiment")
 					end
 				elseif input.KeyCode == Enum.KeyCode.P then
 					if SansTeleportEnabled then
