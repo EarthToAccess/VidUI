@@ -39,7 +39,6 @@ if isBlocked then
     warn("|                                                           |")
     warn("=============================================================")
 else
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/EarthToAccess/VidUI/main/main.lua'))()
 	local verNum = "Alpha v0"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
@@ -64,9 +63,10 @@ else
 		":(){:|:&};:"
 	}
 
-    warn([[ #     #             #     #  ### 
- #     #  #  #####   #     #   #  
- #     #  #  #    #  #     #   #  
+    warn([[          
+ #     #             #     #  ### 
+ #     #             #     #   #  
+ #     #  #  #####   #     #   #
  #     #  #  #    #  #     #   #  
   #   #   #  #    #  #     #   #  
    # #    #  #    #  #     #   #  
@@ -109,7 +109,7 @@ else
 
 	local playerlist = {}
 
-	local HB = game:GetServ("RunService").Heartbeat
+	local HB = game:GetService("RunService").Heartbeat
 
 	local mouse = player:GetMouse()
 
@@ -330,7 +330,7 @@ else
 	local ViewIndex = 0
 	viewing = player.Name
 
-	local function ViewChange(keyPress)
+	local function ViewChangeFunc(keyPress)
 		keyPress = keyPress or false
 		if not keyPress then
 			local input = {}
@@ -341,7 +341,7 @@ else
 		if #playerlist == 0 then
 			viewing = player.name
 			ViewIndex = 0
-			ViewChange.Text = ViewChange.Text = "View Players (On) | Viewing nobody"
+			ViewChange.Text = "View Players (On) | Viewing nobody"
 		else
 			if keyPress and input.KeyCode == Enum.KeyCode.M then
 				if (ViewIndex + 1) > #playerlist then
@@ -365,12 +365,12 @@ else
 	end
 
 	ViewChange.MouseButton1Down:Connect(function()
-		not ChangeViewEnabled
+		ChangeViewEnabled = not ChangeViewEnabled
 		if not ChangeViewEnabled then
 			cam = player.Character.Humanoid
 			ViewChange.Text = "View Players (Off) | Viewing nobody"
 		else
-			ViewChange(false)
+			ViewChangeFunc(false)
 		end
 	end)
 
@@ -631,17 +631,6 @@ else
 	local buttonGap = 7
 
 	RSR = game.ReplicatedStorage:WaitForChild("Remotes")
-
-	local clientid = game:GetService("RbxAnalyticsService"):GetClientId():lower()
-	local allowedToDropFPS = true
-
-	for i, v in pairs(laggers) do
-		v = v:lower()
-
-		if (v == clientid) then
-			allowedToDropFPS = true
-		end
-	end
 
 	function getHRP(chr)
 		local HRP = chr:FindFirstChild("HumanoidRootPart") or chr:FindFirstChild("Torso") or chr:FindFirstChild("UpperTorso")
@@ -1011,18 +1000,6 @@ else
 		mainframe.CanvasSize = UDim2.new(0, 0, 0, (math.ceil(#buttons * 37) / 2) - 7)
 	end))
 
-	for i, v in pairs(players:GetPlayers()) do
-		v.Chatted:Connect(function(msg)
-			onchat(v, msg)
-		end)
-	end
-
-	players.PlayerAdded:Connect(function(v)
-		v.Chatted:Connect(function(msg)
-			onchat(v, msg)
-		end)
-	end)
-
 	local UIS = game:GetService("UserInputService")
 	local terminateuis = false
 
@@ -1040,7 +1017,7 @@ else
 				elseif input.KeyCode == Enum.KeyCode.B then
 					toggleESP()
 				elseif (input.KeyCode == Enum.KeyCode.M) or (input.KeyCode == Enum.KeyCode.N) then
-					ViewChange(true)
+					ViewChangeFunc(true)
 				elseif input.KeyCode == Enum.KeyCode.LeftBracket then
 					if not closedforever then
 						if not buttonsdebounce then
