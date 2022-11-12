@@ -76,12 +76,20 @@ The changelog here has some special denotations for its additions/removals/and s
 
 ### Canary
 
-#### Latest - v1.1
+#### Latest - v1.2
 
-\+ Added `;plr` command to remove individual players from the Player List.  
-\> Fixed a problem with the version number where it showed "Version Version" in the top bar.  
+\> Actually made the "Enhanced ESP" an enhanced ESP  
+\+ ESP is now color coded between full, not-full, and dead.  
+\> Fixed a problem with the ESP not turning on with first button click.  
+\> Removed a lot of filler debug code for the viewing plate portion of the ESP.  
+\> The viewing plate is no longer visible to the user.  
 
 #### Previous
+
+**Version v1.1**
+
+\+ Added `;plr` command to remove individual players from the Player List.  
+\> Fixed a problem with the version number where it showed "Version Version" in the top bar.
 
 **Version v1.0**
 
