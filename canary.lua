@@ -39,7 +39,7 @@ if isBlocked then
     warn("|                                                           |")
     warn("=============================================================")
 else
-	local verNum = "Version v1.0"
+	local verNum = "v1.1"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
@@ -976,6 +976,12 @@ else
 					print("Encountered an error! xpcall says:", e)
 					warn('traceback:', debug.traceback())
 				end)
+			elseif string.sub(text, 1, 4) == (prefix .. "plr") then
+				for i,v in pairs(playerlist) do
+					if string.find(v,string.sub(text, 5)) then
+						table.remove(playerlist,i)
+					end
+				end
             end
 
 			wait(1.5)
