@@ -39,7 +39,7 @@ if isBlocked then
     warn("|                                                           |")
     warn("=============================================================")
 else
-	local verNum = "v1.2"
+	local verNum = "2211.12a"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
@@ -316,7 +316,7 @@ else
 
 	local ViewChange = Instance.new("TextButton")
 	ViewChange.Name = "ViewChange"
-	ViewChange.Text = "View Players (Off) | Viewing nobody"
+	ViewChange.Text = "View Players (Off)"
 	table.insert(buttons,ViewChange)
 
 	ChangeViewEnabled = false
@@ -387,7 +387,7 @@ else
 			-- Set camera subject back to the player
 			game.Workspace.Camera.CameraSubject = player.Character.HumanoidRootPart
 
-			ViewChange.Text = "View Players (Off) | Viewing nobody"
+			ViewChange.Text = "View Players (Off)"
 		else
 			ChangeViewEnabled = true
 
@@ -406,15 +406,16 @@ else
 			-- Teleport player to view plate
 			game:GetService("Players").LocalPlayer.Character:MoveTo(ViewPlate.Position + Vector3.new(0,3,0))
 
+			-- Run the ViewChange function with no input presses to initialize it
+			ViewChangeFunc(nil)
+			wait(.75)
+
 			-- Anchor player
 			for i,v in pairs(player.Character:GetChildren()) do
 				if v:IsA("BasePart") then
 					v.Anchored = true
 				end
 			end
-
-			-- Run the ViewChange function with no input presses to initialize it
-			ViewChangeFunc(nil)
 		end
 	end)
 
@@ -515,11 +516,14 @@ else
 							t.Tag.TextTransparency = 1
 							b.Transparency = 1
 						end
-						if h / maxh >= 0.5 then
-							t.Tag.TextColor3 = Color3.fromRGB((25 * (h / maxh)), 255, (107 * (h / maxh)))
+						if h / maxh >= 0.75 then
+							t.Tag.TextColor3 = Color3.fromRGB(25, 255, 107)
 							b.Color3 = Color3.fromRGB(15, 153, 64)
+						elseif h / maxh >= 0.5 and not (h / maxh <= 0.33) then
+							t.Tag.TextColor3 = Color3.fromRGB(236, 175, 20)
+							b.Color3 = Color3.fromRGB(179, 132, 15)
 						elseif h / maxh == 0 then
-							t.Tag.TextColor3 = Color3.fromRGB(236, 20, (115 * (h / maxh)))
+							t.Tag.TextColor3 = Color3.fromRGB(236, 20, 0)
 							b.Color3 = Color3.fromRGB(134, 12, 66)
 						else
 							t.Tag.TextColor3 = Color3.fromRGB(236, (175 * (h / maxh)), (20 * (h / maxh)))
@@ -642,6 +646,46 @@ else
 	end
 
 	ClearPlayerList.MouseButton1Down:connect(clearComp)
+
+	-- Ping Last Position
+
+	local LastPosPing = Instance.new("TextButton")
+	LastPosPing.Name = "LastPosPing"
+	LastPosPing.Text = "Ping last position"
+	table.insert(buttons, LastPosPing)
+
+	LastPosPing.MouseButton1Down:connect(function()
+
+		local HB = game:GetService("RunService").Heartbeat
+		local CurrentCount = 45
+		local HBConnect
+		
+		local PingBeacon = Instance.new("Part")
+		PingBeacon.Parent = game:GetService("Workspace")[".Ignore"]
+		PingBeacon.Name = "PingBeacon"
+		PingBeacon.CanCollide = false
+		PingBeacon.Shape = Enum.PartType.Cylinder
+		PingBeacon.Size = Vector3.new(10000,25,25)
+		PingBeacon.Orientation = Vector3.new(0,0,90)
+		PingBeacon.Material = Enum.Material.Neon
+		PingBeacon.Color = Color3.fromRGB(255, 2, 234)
+		PingBeacon.Anchored = true
+		PingBeacon.Position = LastPos
+		PingBeacon.Reflectance = 0.75
+
+		local function OnHeartBeat(delta)
+			if CurrentCount > 0 then
+				CurrentCount = CurrentCount - 1
+				PingBeacon.Transparency = (0.5 + (1/CurrentCount))
+				print(CurrentCount)
+			else
+				PingBeacon:Destroy()
+				HBConnect:Disconnect()
+			end
+		end
+
+		HBConnect = HB:Connect(OnHeartBeat)
+	end)
 
 	-- GUI Tweaking
 
