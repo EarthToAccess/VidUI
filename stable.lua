@@ -39,7 +39,7 @@ if isBlocked then
     warn("|                                                           |")
     warn("=============================================================")
 else
-	local verNum = "Version v1.0"
+	local verNum = "v1.3"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
@@ -75,7 +75,7 @@ else
 	print(dumbQuotes[math.random(1,20)])
 	print("------------------------")
 	warn("Welcome to VidUI, " .. player.Name .. "!")
-	warn("You're on the Stable branch of VidUI")
+	warn("You're on the Canary branch of VidUI")
 	warn("Questions or concerns? Let us know in the Discord,")
 	warn("or email Earth himself at earthtoaccess@gmail.com!")
 	wait(0.5)
@@ -209,7 +209,7 @@ else
 	Details.Position = UDim2.new(0, 0, 0.015, 0)
 	Details.Size = UDim2.new(1, 0, 0.15, 0)
 	Details.Font = Enum.Font.JosefinSans
-	Details.Text = player.Name .. " | VidUI | Stable"
+	Details.Text = player.Name .. " | VidUI | Canary"
 	Details.TextColor3 = Color3.fromRGB(251, 251, 255)
 	Details.TextScaled = true
 	Details.ZIndex = 5
@@ -316,7 +316,7 @@ else
 
 	local ViewChange = Instance.new("TextButton")
 	ViewChange.Name = "ViewChange"
-	ViewChange.Text = "View Players (Off) | Viewing nobody"
+	ViewChange.Text = "View Players (Off)"
 	table.insert(buttons,ViewChange)
 
 	ChangeViewEnabled = false
@@ -327,9 +327,7 @@ else
 
 	local function ViewChangeFunc(input)
 		if #playerlist == 0 then
-			print("viewing is " .. viewing)
 			ViewIndex = 0
-			print("ViewIndex is " .. tostring(ViewIndex))
 			ViewChange.Text = "View Players (On) | Viewing nobody"
 		else
 			if input == Enum.KeyCode.M then
@@ -337,16 +335,12 @@ else
 				if (ViewIndex + 1) > #playerlist then
 					warn("ViewIndex was found greater than the current player list!")					
 					ViewIndex = 1
-					print("Set ViewIndex to " .. tostring(ViewIndex))
 					viewing = playerlist[ViewIndex]
-					print("viewing is " .. viewing)
 					ViewChange.Text = "View Player (On) | Viewing " .. viewing
 					game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
 				else
 					ViewIndex = ViewIndex + 1
-					print("Set ViewIndex to " .. tostring(ViewIndex))
 					viewing = playerlist[ViewIndex]
-					print("viewing is " .. viewing)
 					ViewChange.Text = "View Player (On) | Viewing " .. viewing
 					game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
 				end
@@ -355,25 +349,19 @@ else
 				if (ViewIndex - 1) <= 0 then
 					warn("ViewIndex was found smaller than the current player list!")
 					ViewIndex = #playerlist
-					print("Set ViewIndex to " .. tostring(ViewIndex))
 					viewing = playerlist[ViewIndex]
-					print("viewing is " .. viewing)
 					ViewChange.Text = "View Player (On) | Viewing " .. viewing
 					game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
 				else
 					ViewIndex = ViewIndex - 1
-					print("Set ViewIndex to " .. tostring(ViewIndex))
 					viewing = playerlist[ViewIndex]
-					print("viewing is " .. viewing)
 					ViewChange.Text = "View Player (On) | Viewing " .. viewing
 					game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
 				end
 			else
 				-- This should fire if it gets "nil" as the arg
 				ViewIndex = 1
-				print("Set ViewIndex to " .. tostring(ViewIndex))
 				viewing = playerlist[ViewIndex]
-				print("viewing is " .. viewing)
 				ViewChange.Text = "View Player (On) | Viewing " .. viewing
 				game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
 
@@ -386,31 +374,25 @@ else
 			ChangeViewEnabled = false
 			-- Remove the viewing platform
 			game:GetService("Workspace")[".Ignore"]:FindFirstChild("Viewing Plate"):Destroy()
-			warn("Destroyed viewing plate")
 
 			-- Unanchor player
 			for i,v in pairs(player.Character:GetChildren()) do
 				if v:IsA("BasePart") then
 					v.Anchored = false
-					print("Unanchored " .. v.Name)
 				end
 			end
 
 			game:GetService("Players").LocalPlayer.Character:MoveTo(LastPos + Vector3.new(0,10,0))
-			print("Teleported player to last position")
 
 			-- Set camera subject back to the player
 			game.Workspace.Camera.CameraSubject = player.Character.HumanoidRootPart
-			warn("Reset camera")
 
-			ViewChange.Text = "View Players (Off) | Viewing nobody"
+			ViewChange.Text = "View Players (Off)"
 		else
 			ChangeViewEnabled = true
-			print("Set ChangeViewEnabled to true")
 
 			-- Save current position
 			LastPos = player.Character:WaitForChild("HumanoidRootPart").Position
-			print("Got the player's last position as " .. tostring(LastPos))
 
 			-- Create view plate
 			local ViewPlate = Instance.new("Part")
@@ -419,12 +401,14 @@ else
 			ViewPlate.Size = Vector3.new(5,1,5)
 			ViewPlate.Position = Vector3.new(0,1000,0)
 			ViewPlate.Name = "Viewing Plate"
-			ViewPlate.Reflectance = 0.5
-			ViewPlate.Transparency = 0.5
-			print("Made the View Plate")
+			ViewPlate.Transparency = 1
 
 			-- Teleport player to view plate
 			game:GetService("Players").LocalPlayer.Character:MoveTo(ViewPlate.Position + Vector3.new(0,3,0))
+
+			-- Run the ViewChange function with no input presses to initialize it
+			ViewChangeFunc(nil)
+			wait(.75)
 
 			-- Anchor player
 			for i,v in pairs(player.Character:GetChildren()) do
@@ -432,10 +416,6 @@ else
 					v.Anchored = true
 				end
 			end
-
-			-- Run the ViewChange function with no input presses to initialize it
-			warn("Running ViewChangeFunc with no input parameters")
-			ViewChangeFunc(nil)
 		end
 	end)
 
@@ -443,22 +423,18 @@ else
 
 	local ESP = Instance.new("TextButton")
 	ESP.Name = "ESP"
-	if isGold or isMaster then
-		ESPEnabled = false
-		ESP.Text = "ESP (Off) [B]"
-	else 
-		ESPEnabled = true
-		ESP.Text = "ESP (On) [B]"
-	end
+	ESP.Text = "ESP (Off) [B]"
 	table.insert(buttons, ESP)
 
 	local Holder = Instance.new("Folder", game.CoreGui)
 	Holder.Name = "ESP"
 
+	ESPEnabled = false
+
 	local UpdateFuncs = {}
 
 	local Box = Instance.new("BoxHandleAdornment")
-	Box.Name = "nilBoxG"
+	Box.Name = "nilBox"
 	Box.Size = Vector3.new(4, 7, 4)
 	Box.Color3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	Box.Transparency = 0.7
@@ -467,7 +443,7 @@ else
 	Box.Visible = true
 
 	local NameTag = Instance.new("BillboardGui")
-	NameTag.Name = "nilNameTagG"
+	NameTag.Name = "nilNameTag"
 	NameTag.Enabled = true
 	NameTag.Size = UDim2.new(0, 200, 0, 50)
 	NameTag.AlwaysOnTop = true
@@ -488,6 +464,12 @@ else
 	Tag.TextTransparency = 0
 
 	function LoadCharacter(v)
+
+		local tblPlayerData = {}
+		RSR:WaitForChild("PlayerData").OnClientEvent:Connect(function(v, tblData)
+			tblPlayerData[v] = tblData
+		end)
+
 		if v ~= player then
 			repeat wait() until v.Character ~= nil
 			v.Character:WaitForChild("Humanoid")
@@ -515,23 +497,37 @@ else
 						-- v.Character.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
 						local maxh = math.ceil(v.Character.Humanoid.MaxHealth * 10)
 						local h = math.ceil(v.Character.Humanoid.Health * 10)
-						t.Tag.Text = v.Name .. "\n" .. ((maxh ~= 0 and tostring(math.ceil((h / maxh) * 100))) or "0") .. "%  " .. tostring(h) .. "/" .. tostring(maxh)
-						if ESPEnabled then
+						local strh = "H: " .. (not(maxh == 0) and tostring(math.ceil(100 * h / maxh)) or 0) .. "% [" .. tostring(h) .. "|" .. tostring(maxh) .. "]"
+						--
+						local maxm = tblPlayerData[v] and math.ceil(tblPlayerData[v].MaxMana * 10) or 1000
+						local m = tblPlayerData[v] and math.ceil(tblPlayerData[v].Mana * 10) or 1000
+						local strm = "M: " .. (not(maxm == 0) and tostring(math.ceil(100 * m / maxm)) or 0) .. "% [" .. tostring(m) .. "|" .. tostring(maxm) .. "]"
+						--
+						local maxs = tblPlayerData[v] and math.ceil(tblPlayerData[v].MaxStamina * 10) or 1000
+						local s = tblPlayerData[v] and math.ceil(tblPlayerData[v].Stamina * 10) or 1000
+						local strs =  "S: " .. (not(maxs == 0) and tostring(math.ceil(100 * s / maxs)) or 0) .. "% [" .. tostring(s) .. "|" .. tostring(maxs) .. "]"
+
+						t.Tag.Text = v.Name .. ("\n" .. strh) .. ("\n" .. strm) .. ("\n" .. strs)
+
+						if ESPEnabled and table.find(playerlist, v.Name) then
 							t.Tag.TextTransparency = 0
 							b.Transparency = 0.7
 						else
 							t.Tag.TextTransparency = 1
 							b.Transparency = 1
 						end
-						if h / maxh == 1 then
-							t.Tag.TextColor3 = Color3.fromRGB(255, 255, 255)
-							b.Color3 = Color3.fromRGB(255, 255, 255)
+						if h / maxh >= 0.75 then
+							t.Tag.TextColor3 = Color3.fromRGB(25, 255, 107)
+							b.Color3 = Color3.fromRGB(15, 153, 64)
+						elseif h / maxh >= 0.5 and not (h / maxh <= 0.33) then
+							t.Tag.TextColor3 = Color3.fromRGB(236, 175, 20)
+							b.Color3 = Color3.fromRGB(179, 132, 15)
 						elseif h / maxh == 0 then
-							t.Tag.TextColor3 = Color3.fromRGB(0, 0, 0)
-							b.Color3 = Color3.fromRGB(0, 0, 0)
+							t.Tag.TextColor3 = Color3.fromRGB(236, 20, 0)
+							b.Color3 = Color3.fromRGB(134, 12, 66)
 						else
-							t.Tag.TextColor3 = Color3.fromRGB(192, (192 * (h / maxh)), (192 * (h / maxh)))
-							b.Color3 = Color3.fromRGB(192, (192 * (h / maxh)), (192 * (h / maxh)))
+							t.Tag.TextColor3 = Color3.fromRGB(236, (175 * (h / maxh)), (20 * (h / maxh)))
+							b.Color3 = Color3.fromRGB(179, (132 * (h / maxh)), (15 * (h / maxh)))
 						end
 					end) then
 					UpdateFuncs[v] = nil
@@ -604,15 +600,7 @@ else
 
 	function toggleESP()
 		if ESPEnabled == false then
-			if GESPEnabled then
-				GESPEnabled = false
-				ESPEnabled = true
-				ESPGold.Text = "Standard ESP Enabled"
-				wait(1)
-				ESPGold.Text = "(G) Detailed ESP (Off) [M]"
-			else
-				ESPEnabled = true
-			end
+			ESPEnabled = true
 			ESP.Text = "ESP (On) [B]"
 			for i,v in pairs(players:GetPlayers()) do
 				spawn(function() pcall(LoadPlayer, v) end)
@@ -658,6 +646,46 @@ else
 	end
 
 	ClearPlayerList.MouseButton1Down:connect(clearComp)
+
+	-- Ping Last Position
+
+	local LastPosPing = Instance.new("TextButton")
+	LastPosPing.Name = "LastPosPing"
+	LastPosPing.Text = "Ping last position"
+	table.insert(buttons, LastPosPing)
+
+	LastPosPing.MouseButton1Down:connect(function()
+
+		local HB = game:GetService("RunService").Heartbeat
+		local CurrentCount = 45
+		local HBConnect
+		
+		local PingBeacon = Instance.new("Part")
+		PingBeacon.Parent = game:GetService("Workspace")[".Ignore"]
+		PingBeacon.Name = "PingBeacon"
+		PingBeacon.CanCollide = false
+		PingBeacon.Shape = Enum.PartType.Cylinder
+		PingBeacon.Size = Vector3.new(10000,25,25)
+		PingBeacon.Orientation = Vector3.new(0,0,90)
+		PingBeacon.Material = Enum.Material.Neon
+		PingBeacon.Color = Color3.fromRGB(255, 2, 234)
+		PingBeacon.Anchored = true
+		PingBeacon.Position = LastPos
+		PingBeacon.Reflectance = 0.75
+
+		local function OnHeartBeat(delta)
+			if CurrentCount > 0 then
+				CurrentCount = CurrentCount - 1
+				PingBeacon.Transparency = (0.5 + (1/CurrentCount))
+				print(CurrentCount)
+			else
+				PingBeacon:Destroy()
+				HBConnect:Disconnect()
+			end
+		end
+
+		HBConnect = HB:Connect(OnHeartBeat)
+	end)
 
 	-- GUI Tweaking
 
@@ -976,6 +1004,12 @@ else
 					print("Encountered an error! xpcall says:", e)
 					warn('traceback:', debug.traceback())
 				end)
+			elseif string.sub(text, 1, 4) == (prefix .. "plr") then
+				for i,v in pairs(playerlist) do
+					if string.find(v,string.sub(text, 5)) then
+						table.remove(playerlist,i)
+					end
+				end
             end
 
 			wait(1.5)
