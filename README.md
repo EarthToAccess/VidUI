@@ -56,9 +56,9 @@ This list is not comprehensive; there is so much more in store for you to find!
 
 ## Contributions and Rights
 
-It's recommended you [open an issue](https://github.com/EarthToAccess/VidUI/issues), as problems may be fixed, features may be planned, and so on and so forth behind the scenes. Opening an issue also makes issues, features, and so on easier to track. Pull requests will be ignored; however, if you open an issue and your bug gets fixed/feature gets added, you'll be added to the UI's internal credits.
 
-Any UIs based on VidUI should be accredited to EarthToAccess, and repositories that use VidUI's code should have a direct link to this one.
+
+It's recommended you [open an issue](https://github.com/EarthToAccess/VidUI/issues), as problems may be fixed, features may be planned, and so on and so forth behind the scenes. Opening an issue also makes issues, features, and so on easier to track. Pull requests will be ignored; however, if you open an issue and your bug gets fixed/feature gets added, you'll be added to the UI's internal credits.
 
 ## Changelog
 
@@ -66,9 +66,11 @@ The changelog here has some special denotations for its additions/removals/and s
 
 ### Stable 
 
-#### Latest - v1.0
+#### Latest - v1.3
 
-\+ Welcome to VidUI!  
+\> Changed some colors with the ESP. Now, those that fall below 75% will be marked with a gold color, and falling below 33% will begin to change red until death.  
+\+ Added a beacon to ping your last position. This way, you know where you'll end up when you stop viewing people!  
+\> Changed the "off" text of the view change button to not have a "list of players" (showing "Viewing nobody") when it's disabled.  
 
 #### Previous
 
@@ -76,15 +78,25 @@ The changelog here has some special denotations for its additions/removals/and s
 
 ### Canary
 
-#### Latest - v1.2
+#### Latest - 2211.12a
+
+\> Changed the version numbering for Canary builds from matching Stable to being their own string of numbers. Specifically, the string's meaning is;
+  - The first two digits are the year of release.
+  - The second two digits are the month of release.
+  - The final two, after the decimal, are the day of release.
+  - The letter indicates if multiple updates were pushed in one day.  
+
+\> Fixed a problem with the viewing plate teleport function where it would anchor immediately after calling MoveTo, causing your character to still be in the same place server-side. Now, VidUI will wait 3/4ths of a second after calling the view change function before anchoring your character, preventing it from appearing. 
+
+#### Previous
+
+**Version v1.2**
 
 \> Actually made the "Enhanced ESP" an enhanced ESP  
 \+ ESP is now color coded between full, not-full, and dead.  
 \> Fixed a problem with the ESP not turning on with first button click.  
 \> Removed a lot of filler debug code for the viewing plate portion of the ESP.  
 \> The viewing plate is no longer visible to the user.  
-
-#### Previous
 
 **Version v1.1**
 
