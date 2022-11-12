@@ -39,7 +39,7 @@ if isBlocked then
     warn("|                                                           |")
     warn("=============================================================")
 else
-	local verNum = "Alpha v0"
+	local verNum = "Version v1.0"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
@@ -75,7 +75,7 @@ else
 	print(dumbQuotes[math.random(1,20)])
 	print("------------------------")
 	warn("Welcome to VidUI, " .. player.Name .. "!")
-	warn("You're on the Stable branch of VidUI")
+	warn("You're on the Canary branch of VidUI")
 	warn("Questions or concerns? Let us know in the Discord,")
 	warn("or email Earth himself at earthtoaccess@gmail.com!")
 	wait(0.5)
@@ -140,7 +140,7 @@ else
 	-- Frame for around the buttons.
 	local buttonsframe = Instance.new("Frame")
 	buttonsframe.Name = "buttonsframe"
-	buttonsframe.BackgroundColor3 = Color3.fromRGB(18, 54, 179)
+	buttonsframe.BackgroundColor3 = Color3.fromRGB(76, 0, 134)
 	buttonsframe.BorderColor3 = Color3.fromRGB(128, 128, 128)
 	buttonsframe.BorderSizePixel = 2
 	buttonsframe.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -153,7 +153,7 @@ else
 	local commandsframe = Instance.new("Frame")
 	commandsframe.Name = "commandsframe"
 	commandsframe.AnchorPoint = Vector2.new(0.5, 0.5)
-	commandsframe.BackgroundColor3 = Color3.fromRGB(18, 54, 179)
+	commandsframe.BackgroundColor3 = Color3.fromRGB(76, 0, 134)
 	commandsframe.BorderColor3 = Color3.fromRGB(128, 128, 128)
 	commandsframe.BorderSizePixel = 2
 	commandsframe.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -170,7 +170,7 @@ else
 	commandBox.BorderSizePixel = 2
 	commandBox.Position = UDim2.new(0.5, 0, 0.3, 0)
 	commandBox.Size = UDim2.new(0.85, 0, 0.20, 0)
-	commandBox.Font = Enum.Font.Sarpanch
+	commandBox.Font = Enum.Font.JosefinSans
 	commandBox.Text = ""
 	commandBox.TextColor3 = Color3.fromRGB(251, 251, 255)
 	commandBox.TextScaled = true
@@ -191,7 +191,7 @@ else
 	commandBoxOutput.BorderSizePixel = 0
 	commandBoxOutput.Position = UDim2.new(0.5, 0, 0.6, 0)
 	commandBoxOutput.Size = UDim2.new(0.9, 0, 0.2, 0)
-	commandBoxOutput.Font = Enum.Font.Sarpanch
+	commandBoxOutput.Font = Enum.Font.JosefinSans
 	commandBoxOutput.Text = "Player list | (None)"
 	commandBoxOutput.TextColor3 = Color3.fromRGB(251, 251, 255)
 	commandBoxOutput.TextScaled = true
@@ -208,12 +208,8 @@ else
 	Details.BorderColor3 = Color3.fromRGB(128, 128, 128)
 	Details.Position = UDim2.new(0, 0, 0.015, 0)
 	Details.Size = UDim2.new(1, 0, 0.15, 0)
-	Details.Font = Enum.Font.Sarpanch
-	if not isGold then
-		Details.Text = player.Name .. " | VidUI | Stable"
-	else
-		Details.Text = player.Name .. " | VidUI Gold | Stable"
-	end
+	Details.Font = Enum.Font.JosefinSans
+	Details.Text = player.Name .. " | VidUI | Canary"
 	Details.TextColor3 = Color3.fromRGB(251, 251, 255)
 	Details.TextScaled = true
 	Details.ZIndex = 5
@@ -231,7 +227,7 @@ else
 	Details2.BorderColor3 = Color3.fromRGB(128, 128, 128)
 	Details2.Position = UDim2.new(0.5, 0, 0.9, 0)
 	Details2.Size = UDim2.new(1, 0, 0.15, 0)
-	Details2.Font = Enum.Font.Sarpanch
+	Details2.Font = Enum.Font.JosefinSans
 	Details2.Text = "Press ] to open and close this GUI."
 	Details2.TextColor3 = Color3.fromRGB(251, 251, 255)
 	Details2.TextScaled = true
@@ -248,7 +244,7 @@ else
 	Details3.BorderColor3 = Color3.fromRGB(128, 128, 128)
 	Details3.Position = UDim2.new(0, 0, 0.875, 0)
 	Details3.Size = UDim2.new(1, 0, 0.15, 0)
-	Details3.Font = Enum.Font.Sarpanch
+	Details3.Font = Enum.Font.JosefinSans
 	Details3.Text = "Press [ to open and close this GUI."
 	Details3.TextColor3 = Color3.fromRGB(251, 251, 255)
 	Details3.TextScaled = true
@@ -265,7 +261,7 @@ else
 	Details4.BorderColor3 = Color3.fromRGB(128, 128, 128)
 	Details4.Position = UDim2.new(0, 0, 1.1, 0)
 	Details4.Size = UDim2.new(1, 0, 0.175, 0)
-	Details4.Font = Enum.Font.Sarpanch
+	Details4.Font = Enum.Font.JosefinSans
 	Details4.Text = "Hold the Left and Right arrow keys, then press any key to quit VidUI."
 	Details4.TextColor3 = Color3.fromRGB(251, 251, 255)
 	Details4.TextScaled = true
@@ -281,7 +277,7 @@ else
 	Version.BorderColor3 = Color3.fromRGB(128, 128, 128)
 	Version.Position = UDim2.new(0, 0, 0.05, 0)
 	Version.Size = UDim2.new(1, 0, 0.1, 0)
-	Version.Font = Enum.Font.Sarpanch
+	Version.Font = Enum.Font.JosefinSans
 	Version.Text = "Version " .. verNum
 	Version.TextColor3 = Color3.fromRGB(251, 251, 255)
 	Version.TextScaled = true
@@ -294,7 +290,7 @@ else
 	local mainframe = Instance.new("ScrollingFrame")
 	mainframe.Name = "mainframe"
 	mainframe.Active = true
-	mainframe.BackgroundColor3 = Color3.fromRGB(49, 83, 89)
+	mainframe.BackgroundColor3 = Color3.fromRGB(25, 77, 255)
 	mainframe.BorderColor3 = Color3.fromRGB(128, 128, 128)
 	mainframe.BorderSizePixel = 2
 	mainframe.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -324,53 +320,122 @@ else
 	table.insert(buttons,ViewChange)
 
 	ChangeViewEnabled = false
-	local HBConnect
-	local cam = game.Workspace.Camera.CameraSubject
+	local LastPos
 
 	local ViewIndex = 0
 	viewing = player.Name
 
-	local function ViewChangeFunc(keyPress)
-		keyPress = keyPress or false
-		if not keyPress then
-			local input = {}
-			input.KeyCode = nil
-		else end -- This section of code is here to prevent potential errors about undefined variables at lines 345 to 361.
-		-- It was added primarily due to coding without executors being updated, so there was no way to test if it was needed.
-
+	local function ViewChangeFunc(input)
 		if #playerlist == 0 then
-			viewing = player.name
+			print("viewing is " .. viewing)
 			ViewIndex = 0
+			print("ViewIndex is " .. tostring(ViewIndex))
 			ViewChange.Text = "View Players (On) | Viewing nobody"
 		else
-			if keyPress and input.KeyCode == Enum.KeyCode.M then
+			if input == Enum.KeyCode.M then
+				-- This should fire if the function gets run with the KeyCode M as an arg
 				if (ViewIndex + 1) > #playerlist then
+					warn("ViewIndex was found greater than the current player list!")					
 					ViewIndex = 1
+					print("Set ViewIndex to " .. tostring(ViewIndex))
 					viewing = playerlist[ViewIndex]
+					print("viewing is " .. viewing)
+					ViewChange.Text = "View Player (On) | Viewing " .. viewing
+					game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
 				else
 					ViewIndex = ViewIndex + 1
+					print("Set ViewIndex to " .. tostring(ViewIndex))
 					viewing = playerlist[ViewIndex]
+					print("viewing is " .. viewing)
+					ViewChange.Text = "View Player (On) | Viewing " .. viewing
+					game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
 				end
-			elseif keyPress and input.KeyCode == Enum.KeyCode.N then
+			elseif input == Enum.KeyCode.N then
+				-- This should fire if the function gets run with the KeyCode N as an arg
 				if (ViewIndex - 1) <= 0 then
+					warn("ViewIndex was found smaller than the current player list!")
 					ViewIndex = #playerlist
+					print("Set ViewIndex to " .. tostring(ViewIndex))
 					viewing = playerlist[ViewIndex]
+					print("viewing is " .. viewing)
+					ViewChange.Text = "View Player (On) | Viewing " .. viewing
+					game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
 				else
 					ViewIndex = ViewIndex - 1
+					print("Set ViewIndex to " .. tostring(ViewIndex))
 					viewing = playerlist[ViewIndex]
+					print("viewing is " .. viewing)
+					ViewChange.Text = "View Player (On) | Viewing " .. viewing
+					game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
 				end
+			else
+				-- This should fire if it gets "nil" as the arg
+				ViewIndex = 1
+				print("Set ViewIndex to " .. tostring(ViewIndex))
+				viewing = playerlist[ViewIndex]
+				print("viewing is " .. viewing)
+				ViewChange.Text = "View Player (On) | Viewing " .. viewing
+				game.Workspace.Camera.CameraSubject = players[viewing].Character.PrimaryPart
+
 			end
-			cam = players[viewing].Character.Humanoid
 		end
 	end
 
 	ViewChange.MouseButton1Down:Connect(function()
-		ChangeViewEnabled = not ChangeViewEnabled
-		if not ChangeViewEnabled then
-			cam = player.Character.Humanoid
+		if ChangeViewEnabled then
+			ChangeViewEnabled = false
+			-- Remove the viewing platform
+			game:GetService("Workspace")[".Ignore"]:FindFirstChild("Viewing Plate"):Destroy()
+			warn("Destroyed viewing plate")
+
+			-- Unanchor player
+			for i,v in pairs(player.Character:GetChildren()) do
+				if v:IsA("BasePart") then
+					v.Anchored = false
+					print("Unanchored " .. v.Name)
+				end
+			end
+
+			game:GetService("Players").LocalPlayer.Character:MoveTo(LastPos + Vector3.new(0,10,0))
+			print("Teleported player to last position")
+
+			-- Set camera subject back to the player
+			game.Workspace.Camera.CameraSubject = player.Character.HumanoidRootPart
+			warn("Reset camera")
+
 			ViewChange.Text = "View Players (Off) | Viewing nobody"
 		else
-			ViewChangeFunc(false)
+			ChangeViewEnabled = true
+			print("Set ChangeViewEnabled to true")
+
+			-- Save current position
+			LastPos = player.Character:WaitForChild("HumanoidRootPart").Position
+			print("Got the player's last position as " .. tostring(LastPos))
+
+			-- Create view plate
+			local ViewPlate = Instance.new("Part")
+			ViewPlate.Parent = game:GetService("Workspace")[".Ignore"]
+			ViewPlate.Anchored = true
+			ViewPlate.Size = Vector3.new(5,1,5)
+			ViewPlate.Position = Vector3.new(0,1000,0)
+			ViewPlate.Name = "Viewing Plate"
+			ViewPlate.Reflectance = 0.5
+			ViewPlate.Transparency = 0.5
+			print("Made the View Plate")
+
+			-- Teleport player to view plate
+			game:GetService("Players").LocalPlayer.Character:MoveTo(ViewPlate.Position + Vector3.new(0,3,0))
+
+			-- Anchor player
+			for i,v in pairs(player.Character:GetChildren()) do
+				if v:IsA("BasePart") then
+					v.Anchored = true
+				end
+			end
+
+			-- Run the ViewChange function with no input presses to initialize it
+			warn("Running ViewChangeFunc with no input parameters")
+			ViewChangeFunc(nil)
 		end
 	end)
 
@@ -378,10 +443,14 @@ else
 
 	local ESP = Instance.new("TextButton")
 	ESP.Name = "ESP"
-	ESP.Text = "ESP (ON) [B]"
+	if isGold or isMaster then
+		ESPEnabled = false
+		ESP.Text = "ESP (Off) [B]"
+	else 
+		ESPEnabled = true
+		ESP.Text = "ESP (On) [B]"
+	end
 	table.insert(buttons, ESP)
-
-	ESPEnabled = true
 
 	local Holder = Instance.new("Folder", game.CoreGui)
 	Holder.Name = "ESP"
@@ -389,7 +458,7 @@ else
 	local UpdateFuncs = {}
 
 	local Box = Instance.new("BoxHandleAdornment")
-	Box.Name = "nilBox"
+	Box.Name = "nilBoxG"
 	Box.Size = Vector3.new(4, 7, 4)
 	Box.Color3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	Box.Transparency = 0.7
@@ -398,7 +467,7 @@ else
 	Box.Visible = true
 
 	local NameTag = Instance.new("BillboardGui")
-	NameTag.Name = "nilNameTag"
+	NameTag.Name = "nilNameTagG"
 	NameTag.Enabled = true
 	NameTag.Size = UDim2.new(0, 200, 0, 50)
 	NameTag.AlwaysOnTop = true
@@ -413,13 +482,13 @@ else
 	Tag.TextColor3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	Tag.TextStrokeColor3 = Color3.new(0 / 255, 0 / 255, 0 / 255)
 	Tag.TextStrokeTransparency = 0.4
-	Tag.Text = "nil"
-	Tag.Font = Enum.Font.SourceSansBold
+	Tag.Text = "Not Available"
+	Tag.Font = Enum.Font.RobotoMono
 	Tag.TextScaled = false
 	Tag.TextTransparency = 0
 
 	function LoadCharacter(v)
-		if v ~= game.Players.LocalPlayer then
+		if v ~= player then
 			repeat wait() until v.Character ~= nil
 			v.Character:WaitForChild("Humanoid")
 			local vHolder = Holder:FindFirstChild(v.Name)
@@ -447,9 +516,9 @@ else
 						local maxh = math.ceil(v.Character.Humanoid.MaxHealth * 10)
 						local h = math.ceil(v.Character.Humanoid.Health * 10)
 						t.Tag.Text = v.Name .. "\n" .. ((maxh ~= 0 and tostring(math.ceil((h / maxh) * 100))) or "0") .. "%  " .. tostring(h) .. "/" .. tostring(maxh)
-						if ESPEnabled and table.find(competing, v.Name) then
+						if ESPEnabled then
 							t.Tag.TextTransparency = 0
-							b.Transparency = 1
+							b.Transparency = 0.7
 						else
 							t.Tag.TextTransparency = 1
 							b.Transparency = 1
@@ -481,7 +550,7 @@ else
 	end
 
 	function LoadPlayer(v)
-		if v ~= game.Players.LocalPlayer then
+		if v ~= player then
 			local vHolder = Instance.new("Folder", Holder)
 			vHolder.Name = v.Name
 			v.CharacterAdded:Connect(function()
@@ -504,15 +573,15 @@ else
 		end
 	end
 
-	for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+	for i, v in pairs(players:GetPlayers()) do
 		spawn(function() pcall(LoadPlayer, v) end)
 	end
 
-	game:GetService("Players").PlayerAdded:Connect(function(v)
+	players.PlayerAdded:Connect(function(v)
 		pcall(LoadPlayer, v)
 	end)
 
-	game:GetService("Players").PlayerRemoving:Connect(function(v)
+	players.PlayerRemoving:Connect(function(v)
 		pcall(UnloadPlayer, v)
 	end)
 
@@ -524,8 +593,8 @@ else
 				LoadCharacter(i)
 			end
 		elseif i:IsA("Humanoid") and i.Parent then
-			local p = game:GetService("Players"):GetPlayerFromCharacter(i.Parent)
-			if p ~= game.Players.LocalPlayer and p ~= nil and Holder:FindFirstChild(p.Name) then
+			local p = players:GetPlayerFromCharacter(i.Parent)
+			if p ~= player and p ~= nil and Holder:FindFirstChild(p.Name) then
 				pcall(function()
 					UpdateFuncs[p]()
 				end)
@@ -535,14 +604,22 @@ else
 
 	function toggleESP()
 		if ESPEnabled == false then
-			ESPEnabled = true
-			ESP.Text = "ESP (ON) [B]"
-			for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+			if GESPEnabled then
+				GESPEnabled = false
+				ESPEnabled = true
+				ESPGold.Text = "Standard ESP Enabled"
+				wait(1)
+				ESPGold.Text = "(G) Detailed ESP (Off) [M]"
+			else
+				ESPEnabled = true
+			end
+			ESP.Text = "ESP (On) [B]"
+			for i,v in pairs(players:GetPlayers()) do
 				spawn(function() pcall(LoadPlayer, v) end)
 			end
 		else
 			ESPEnabled = false
-			ESP.Text = "ESP (OFF) [B]"
+			ESP.Text = "ESP (Off) [B]"
 			for i, v in pairs(game.Players:GetPlayers()) do
 				spawn(function() pcall(UnloadPlayer, v) end)
 			end
@@ -550,14 +627,6 @@ else
 	end
 
 	ESP.MouseButton1Down:connect(toggleESP)
-
-	local plate = Instance.new("Part")
-	plate.Parent = game.Workspace
-	plate.Size = Vector3.new(40, 1, 40)
-	plate.Position = Vector3.new(0, 555, 0)
-	plate.Anchored = true
-	plate.Reflectance = 0.5
-	plate.Transparency = 0.5
 
 	-- Rejoin Server
 
@@ -609,7 +678,7 @@ else
 		v.BorderSizePixel = 2
 		v.Position = UDim2.new(0, 0, 0, 0)
 		v.Size = UDim2.new(0, 0, 0, 0)
-		v.Font = Enum.Font.Sarpanch
+		v.Font = Enum.Font.JosefinSans
 		v.TextColor3 = Color3.fromRGB(251, 251, 255)
 		v.TextScaled = true
 		v.TextSize = 14.000
@@ -907,22 +976,6 @@ else
 					print("Encountered an error! xpcall says:", e)
 					warn('traceback:', debug.traceback())
 				end)
-			elseif string.sub(text, 1, 6) == (prefix .. "info") then
-				if string.sub(text, 7) == "status" then
-					print("The current status of VidUI is " .. status)
-					commandBoxOutput.Text = "VidUI Status: " .. status
-				elseif string.sub(text, 7) == "repo" or string.sub(text, 7) == "github" then
-					print("The GitHub repository link is " .. repo)
-					commandBoxOutput.Text = "Check the console for more info!"
-				end
-			elseif string.sub(text, 1, 8) == (prefix .. "update") then
-				if verNum == current then
-					commandBoxOutput.Text = "No update required!"
-				elseif verNum == last then
-					commandBoxOutput.Text = "Version outdated! Current: " .. current
-				else
-					commandBoxOutput.Text = "bro ur on a dev build or sm"
-				end
             end
 
 			wait(1.5)
@@ -941,8 +994,11 @@ else
 				else
 					table.insert(playerlist, matches[1])
 				end
-			else
+			elseif #matches == 0 then
 				commandBoxOutput.Text = "Invalid username! Type their name again."
+				wait(1.5)
+			else
+				commandBoxOutput.Text = "Multiple users found! Try again, please!"
 				wait(1.5)
 			end
 		end
@@ -1017,7 +1073,9 @@ else
 				elseif input.KeyCode == Enum.KeyCode.B then
 					toggleESP()
 				elseif (input.KeyCode == Enum.KeyCode.M) or (input.KeyCode == Enum.KeyCode.N) then
-					ViewChangeFunc(true)
+					if ChangeViewEnabled then
+						ViewChangeFunc(input.KeyCode)
+					end
 				elseif input.KeyCode == Enum.KeyCode.LeftBracket then
 					if not closedforever then
 						if not buttonsdebounce then
