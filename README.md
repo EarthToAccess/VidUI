@@ -64,20 +64,25 @@ Any UIs based on VidUI should be accredited to EarthToAccess, and repositories t
 
 The changelog here has some special denotations for its additions/removals/and so on. Additions will be marked with "+"; removals, "-"; notes, "~"; changes/fixes, ">".
 
-### Latest 
+### Stable 
 
-#### Stable
+#### Latest - v1.0
+
+\+ Welcome to VidUI!  
+
+#### Previous
+
+**None yet!**
+
+### Canary
+
+#### Latest - v1.1
+
+\+ Added `;plr` command to remove individual players from the Player List.  
+\> Fixed a problem with the version number where it showed "Version Version" in the top bar.  
+
+#### Previous
 
 **Version v1.0**
 
-\+ Welcome to VidUI!
-
-#### Canary
-
-**Version v1.0**
-
-\+ Welcome to VidUI!
-
-### Previous
-
-#### None yet!
+\+ Welcome to VidUI!  
