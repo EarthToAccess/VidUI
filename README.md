@@ -66,24 +66,34 @@ The changelog here has some special denotations for its additions/removals/and s
 
 ### Stable 
 
-#### Latest - v1.3
+#### Latest - v1.4
+
+\~ The ESP got a makeover!  
+\> ESP now has brighter and more legible dynamic changing text, letting you know exactly how close until someone is dead!  
+\> It also now has some better formatting! No more looking the same across the board.  
+\> Minor performance enhancements to bring your game to the next level without sacrificing your CPU.
+
+#### Previous
+
+**Version v1.3**
 
 \> Changed some colors with the ESP. Now, those that fall below 75% will be marked with a gold color, and falling below 33% will begin to change red until death.  
 \+ Added a beacon to ping your last position. This way, you know where you'll end up when you stop viewing people!  
 \> Changed the "off" text of the view change button to not have a "list of players" (showing "Viewing nobody") when it's disabled.  
 
-#### Previous
-
-**None yet!**
-
 ### Canary
 
-#### Latest - 2211.12b 
+#### Latest - 2211.13a
+
+\> The text to the ESP now has RichText enabled, allowing for some better formatting. Still experimenting with color./  
+\> Set the ESP NameTag's MaxDistance to 750 to improve performance.
+
+#### Previous
+
+**Version 2211.12b** 
 
 \> Fixed a problem with last position ping where not enabling view change first would break it. Now, it will simply ping your current location.  
 \> Fixed a problem with the `;plr` command where it just didn't work, at all. It will now work as intended, and provide an error via the command box output if it cannot find the player you're asking for.
-
-#### Previous
 
 **Version 2211.12a**
 
