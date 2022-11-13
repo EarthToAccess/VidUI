@@ -39,7 +39,7 @@ if isBlocked then
     warn("|                                                           |")
     warn("=============================================================")
 else
-	local verNum = "2211.12a"
+	local verNum = "2211.12b"
 	local dumbQuotes = {
 		"Jeez, when'd it get so hot in here?",
 		"Is it just me or is that *too* blue?",
@@ -670,14 +670,17 @@ else
 		PingBeacon.Material = Enum.Material.Neon
 		PingBeacon.Color = Color3.fromRGB(255, 2, 234)
 		PingBeacon.Anchored = true
-		PingBeacon.Position = LastPos
+		if LastPos == nil then
+			PingBeacon.Position = player.Character.HumanoidRootPart.Position
+		else
+			PingBeacon.Position = LastPos
+		end
 		PingBeacon.Reflectance = 0.75
 
 		local function OnHeartBeat(delta)
 			if CurrentCount > 0 then
 				CurrentCount = CurrentCount - 1
 				PingBeacon.Transparency = (0.5 + (1/CurrentCount))
-				print(CurrentCount)
 			else
 				PingBeacon:Destroy()
 				HBConnect:Disconnect()
@@ -1006,8 +1009,11 @@ else
 				end)
 			elseif string.sub(text, 1, 4) == (prefix .. "plr") then
 				for i,v in pairs(playerlist) do
-					if string.find(v,string.sub(text, 5)) then
+					if string.find(string.lower(v),string.sub(text, 6)) then
 						table.remove(playerlist,i)
+						commandBoxOutput.Text = "Removed " .. tostring(v) .. " from the player list!"
+					else
+						commandBoxOutput.Text = "Didn't find a matching user in the player list!"
 					end
 				end
             end
