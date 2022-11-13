@@ -448,6 +448,7 @@ else
 	NameTag.Size = UDim2.new(0, 200, 0, 50)
 	NameTag.AlwaysOnTop = true
 	NameTag.StudsOffset = Vector3.new(0, 3.6, 0)
+	NameTag.MaxDistance = 750
 
 	local Tag = Instance.new("TextLabel", NameTag)
 	Tag.Name = "Tag"
@@ -458,10 +459,11 @@ else
 	Tag.TextColor3 = Color3.new(100 / 255, 100 / 255, 100 / 255)
 	Tag.TextStrokeColor3 = Color3.new(0 / 255, 0 / 255, 0 / 255)
 	Tag.TextStrokeTransparency = 0.4
-	Tag.Text = "Not Available"
-	Tag.Font = Enum.Font.RobotoMono
+	Tag.Text = "<b>Not Available</b>"
+	Tag.Font = Enum.Font.Ubuntu
 	Tag.TextScaled = false
 	Tag.TextTransparency = 0
+	Tag.RichText = true
 
 	function LoadCharacter(v)
 
@@ -488,7 +490,7 @@ else
 			if not t.Adornee then
 				return UnloadCharacter(v)
 			end
-			t.Tag.Text = v.Name
+			t.Tag.Text = "<sc>" .. v.Name .. "</sc>"
 			t.Enabled = true
 			wait()
 
@@ -497,17 +499,17 @@ else
 						-- v.Character.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
 						local maxh = math.ceil(v.Character.Humanoid.MaxHealth * 10)
 						local h = math.ceil(v.Character.Humanoid.Health * 10)
-						local strh = "H: " .. (not(maxh == 0) and tostring(math.ceil(100 * h / maxh)) or 0) .. "% [" .. tostring(h) .. "|" .. tostring(maxh) .. "]"
+						local strh = '<font weight="heavy">H:</font> ' .. (not(maxh == 0) and tostring(math.ceil(100 * h / maxh)) or 0) .. "% (" .. tostring(h) .. "/" .. tostring(maxh) .. ")"
 						--
 						local maxm = tblPlayerData[v] and math.ceil(tblPlayerData[v].MaxMana * 10) or 1000
 						local m = tblPlayerData[v] and math.ceil(tblPlayerData[v].Mana * 10) or 1000
-						local strm = "M: " .. (not(maxm == 0) and tostring(math.ceil(100 * m / maxm)) or 0) .. "% [" .. tostring(m) .. "|" .. tostring(maxm) .. "]"
+						local strm = '<font weight="heavy">M:</font> ' .. (not(maxm == 0) and tostring(math.ceil(100 * m / maxm)) or 0) .. "% (" .. tostring(m) .. "/" .. tostring(maxm) .. ")"
 						--
 						local maxs = tblPlayerData[v] and math.ceil(tblPlayerData[v].MaxStamina * 10) or 1000
 						local s = tblPlayerData[v] and math.ceil(tblPlayerData[v].Stamina * 10) or 1000
-						local strs =  "S: " .. (not(maxs == 0) and tostring(math.ceil(100 * s / maxs)) or 0) .. "% [" .. tostring(s) .. "|" .. tostring(maxs) .. "]"
+						local strs =  '<font weight="heavy">S:</font> ' .. (not(maxs == 0) and tostring(math.ceil(100 * s / maxs)) or 0) .. "% (" .. tostring(s) .. "/" .. tostring(maxs) .. ")"
 
-						t.Tag.Text = v.Name .. ("\n" .. strh) .. ("\n" .. strm) .. ("\n" .. strs)
+						t.Tag.Text = '<font weight="heavy"><sc>' .. v.Name .. '</sc></font>' .. ("\n" .. strh) .. ("\n" .. strm) .. ("\n" .. strs)
 
 						if ESPEnabled and table.find(playerlist, v.Name) then
 							t.Tag.TextTransparency = 0
@@ -517,16 +519,16 @@ else
 							b.Transparency = 1
 						end
 						if h / maxh >= 0.75 then
-							t.Tag.TextColor3 = Color3.fromRGB(25, 255, 107)
+							t.Tag.TextColor3 = Color3.fromRGB(62, 255, 62)
 							b.Color3 = Color3.fromRGB(15, 153, 64)
-						elseif h / maxh >= 0.5 and not (h / maxh <= 0.33) then
-							t.Tag.TextColor3 = Color3.fromRGB(236, 175, 20)
+						elseif h / maxh <= 0.75 and h / maxh >= 0.5 then
+							t.Tag.TextColor3 = Color3.fromRGB(255, 255, 55)
 							b.Color3 = Color3.fromRGB(179, 132, 15)
 						elseif h / maxh == 0 then
-							t.Tag.TextColor3 = Color3.fromRGB(236, 20, 0)
+							t.Tag.TextColor3 = Color3.fromRGB(255, 2, 2)
 							b.Color3 = Color3.fromRGB(134, 12, 66)
 						else
-							t.Tag.TextColor3 = Color3.fromRGB(236, (175 * (h / maxh)), (20 * (h / maxh)))
+							t.Tag.TextColor3 = Color3.fromRGB(255, (196 * (h / maxh)), (2 * (h / maxh)))
 							b.Color3 = Color3.fromRGB(179, (132 * (h / maxh)), (15 * (h / maxh)))
 						end
 					end) then
