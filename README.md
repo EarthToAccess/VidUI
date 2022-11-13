@@ -78,7 +78,14 @@ The changelog here has some special denotations for its additions/removals/and s
 
 ### Canary
 
-#### Latest - 2211.12a
+#### Latest - 2211.12b 
+
+\> Fixed a problem with last position ping where not enabling view change first would break it. Now, it will simply ping your current location.  
+\> Fixed a problem with the `;plr` command where it just didn't work, at all. It will now work as intended, and provide an error via the command box output if it cannot find the player you're asking for.
+
+#### Previous
+
+**Version 2211.12a**
 
 \> Changed the version numbering for Canary builds from matching Stable to being their own string of numbers. Specifically, the string's meaning is;
   - The first two digits are the year of release.
@@ -86,9 +93,7 @@ The changelog here has some special denotations for its additions/removals/and s
   - The final two, after the decimal, are the day of release.
   - The letter indicates if multiple updates were pushed in one day.  
 
-\> Fixed a problem with the viewing plate teleport function where it would anchor immediately after calling MoveTo, causing your character to still be in the same place server-side. Now, VidUI will wait 3/4ths of a second after calling the view change function before anchoring your character, preventing it from appearing. 
-
-#### Previous
+\> Fixed a problem with the viewing plate teleport function where it would anchor immediately after calling MoveTo, causing your character to still be in the same place server-side. Now, VidUI will wait 3/4ths of a second after calling the view change function before anchoring your character, preventing it from appearing.
 
 **Version v1.2**
 
